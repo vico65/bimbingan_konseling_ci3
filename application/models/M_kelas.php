@@ -52,7 +52,7 @@ class M_kelas extends CI_Model{
 	
 
 	public function getStudentsByKelas($id_kelas) {
-		$this->db->select('id_siswa, nis_siswa, nama_siswa, kelas, alamat_siswa, jenis_kelamin, tanggal_lahir, no_telephone_siswa, poin_siswa '); // Sesuaikan kolom yang diperlukan
+		$this->db->select('nis_siswa, nama_siswa, kelas, alamat_siswa, jenis_kelamin, tanggal_lahir, no_telephone_siswa, poin_siswa '); // Sesuaikan kolom yang diperlukan
 		$this->db->from('siswa'); // Ganti dengan nama tabel siswa yang sebenarnya
 		$this->db->where('kelas', $id_kelas); // Menggunakan kolom kelas yang sesuai dengan id_kelas
 		$query = $this->db->get();

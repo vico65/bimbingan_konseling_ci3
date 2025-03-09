@@ -94,8 +94,8 @@ class Adminbk extends CI_Controller {
 	}
 
 	public function HapusSiswa(){
-		$id=$this->input->post('id_siswa');
-		$this->model_global->AksiHapusSiswa($id);
+		$nis=$this->input->post('nis_siswa');
+		$this->model_global->AksiHapusSiswa($nis);
 	}
 
 	public function GetDatasiswa() {
@@ -104,7 +104,7 @@ class Adminbk extends CI_Controller {
 	}
 
 	public function aksiUpdateSiswa(){
-		$id_siswa=$this->input->post('id_siswa');
+		$nis_siswa=$this->input->post('nis_siswa');
 		$nis=$this->input->post('nis');
 		$nama=$this->input->post('nama');
 		$alamat=$this->input->post('alamat');
@@ -113,7 +113,7 @@ class Adminbk extends CI_Controller {
 		$tgl_lahir=$this->input->post('tgl_lahir');
 		$tlp=$this->input->post('tlp');
 
-		$this->model_global->aksiUpdateSiswa($id_siswa,$nis,$nama,$alamat,$jk,$kelas,$tgl_lahir,$tlp);
+		$this->model_global->aksiUpdateSiswa($nis_siswa,$nis,$nama,$alamat,$jk,$kelas,$tgl_lahir,$tlp);
 	}
 
 	public function aksiTambahPeanggaran(){

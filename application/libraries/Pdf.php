@@ -16,6 +16,7 @@ class Pdf
     {
         // Set options dompdf
         $options = new Options();
+        $options->set('isHtml5ParserEnabled', true);
         $options->set('isRemoteEnabled', true); // Enable remote file access (for images, etc.)
         $this->dompdf = new Dompdf($options);
     }

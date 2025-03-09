@@ -70,7 +70,8 @@
 
         Tip 2: you can also add an image using data-image tag
     -->
-      <div class="logo">
+    
+    <div class="logo">
         <a href="<?= base_url() ?>beranda" class="simple-text logo-normal">
           <i class="fa fa-user"></i>
           <?= $this->session->userdata('nama') ?>
@@ -78,7 +79,7 @@
       </div>
       <div class="sidebar-wrapper">
         <ul class="nav">
-          <li class="nav-item active">
+          <li class="nav-item <?= ($this->uri->segment(1) == '' || $this->uri->segment(1) == 'beranda') ? 'active' : '' ?>">
             <a class="nav-link" href="<?= base_url() ?>beranda">
               <i class="material-icons">dashboard</i>
               <p>Dashboard</p>
@@ -88,55 +89,49 @@
           $hakAkses = $this->session->userdata('level_akses');
           if ($hakAkses == 'adminbk') {
           ?>
-            <li class="nav-item ">
+            <li class="nav-item <?= ($this->uri->segment(1) == 'daftar_siswa') ? 'active' : '' ?>">
               <a class="nav-link" href="<?= base_url() ?>daftar_siswa">
                 <i class="material-icons">group</i>
-                <p>Daftar siswa</p>
+                <p>Daftar Siswa</p>
               </a>
             </li>
-            <li class="nav-item ">
+            <li class="nav-item <?= ($this->uri->segment(1) == 'daftar_kelas') ? 'active' : '' ?>">
               <a class="nav-link" href="<?= base_url() ?>daftar_kelas">
                 <i class="material-icons">supervised_user_circle</i>
                 <p>Daftar Kelas</p>
               </a>
             </li>
-            <li class="nav-item ">
+            <li class="nav-item <?= ($this->uri->segment(1) == 'daftar_guru') ? 'active' : '' ?>">
               <a class="nav-link" href="<?= base_url() ?>daftar_guru">
                 <i class="material-icons">school</i>
                 <p>Daftar guru</p>
               </a>
             </li>
-            <li class="nav-item ">
+            <li class="nav-item <?= ($this->uri->segment(1) == 'daftar_pelanggaran') ? 'active' : '' ?>">
               <a class="nav-link" href="<?= base_url() ?>daftar_pelanggaran">
                 <i class="material-icons">content_paste</i>
                 <p>Daftar pelanggaran</p>
               </a>
             </li>
-            <li class="nav-item ">
+            <li class="nav-item <?= ($this->uri->segment(1) == 'histori_laporan' || $this->uri->segment(1) == 'adminbk') ? 'active' : '' ?>">
               <a class="nav-link" href="<?= base_url() ?>histori_laporan">
                 <i class="material-icons">report</i>
                 <p>Histori Laporan </p>
               </a>
             </li>
-            <li class="nav-item ">
+            <li class="nav-item <?= ($this->uri->segment(1) == 'daftar_bimbingan' || $this->uri->segment(1) == 'jadwal_bimbingan') ? 'active' : '' ?>">
               <a class="nav-link" href="<?= base_url() ?>daftar_bimbingan">
                 <i class="material-icons">info_outline</i>
                 <p>Daftar siswa bimbingan</p>
               </a>
             </li>
-            <li class="nav-item ">
+            <li class="nav-item <?= ($this->uri->segment(1) == 'tahun_ajaran') ? 'active' : '' ?>">
               <a class="nav-link" href="<?= base_url() ?>tahun_ajaran">
                 <i class="material-icons">event</i>
                 <p>Tahun Akademik</p>
               </a>
             </li>
-            <!-- <li class="nav-item ">
-            <a class="nav-link" href="<?= base_url() ?>sms_gateway">
-              <i class="material-icons">message</i>
-              <p>SMS gateway</p>
-            </a>
-          </li> -->
-            <li class="nav-item ">
+            <li class="nav-item <?= ($this->uri->segment(1) == 'surat_panggilan') ? 'active' : '' ?>">
               <a class="nav-link" href="<?= base_url() ?>surat_panggilan">
                 <i class="material-icons">print</i>
                 <p>Surat</p>
@@ -145,7 +140,7 @@
           <?php
           } else if ($hakAkses == 'guru') {
           ?>
-            <li class="nav-item ">
+            <li class="nav-item <?= ($this->uri->segment(1) == 'daftar_laporan') ? 'active' : '' ?>">
               <a class="nav-link" href="<?= base_url() ?>daftar_laporan">
                 <i class="material-icons">content_paste</i>
                 <p>Daftar laporan</p>
@@ -154,7 +149,7 @@
           <?php
           } else if ($hakAkses == 'murid') {
           ?>
-            <li class="nav-item ">
+            <li class="nav-item <?= ($this->uri->segment(1) == 'jadwal_bimbingan') ? 'active' : '' ?>">
               <a class="nav-link" href="<?= base_url() ?>jadwal_bimbingan">
                 <i class="material-icons">content_paste</i>
                 <p>Bimbingan</p>
@@ -164,7 +159,7 @@
           } else if ($hakAkses == 'wali_murid') {
           ?>
             
-            <li class="nav-item ">
+            <li class="nav-item <?= ($this->uri->segment(1) == 'surat') ? 'active' : '' ?>">
               <a class="nav-link" href="<?= base_url() ?>surat">
                 <i class="material-icons">print</i>
                 <p>Surat</p>
@@ -173,55 +168,49 @@
           <?php
           } else if ($hakAkses == 'kepsek') {
           ?>
-            <!-- <li class="nav-item ">
-            <a class="nav-link" href="<?= base_url() ?>surat-pemanggilan">
-              <i class="material-icons">print</i>
-              <p>cetak</p>
-            </a>
-          </li> -->
-            <li class="nav-item ">
+            <li class="nav-item <?= ($this->uri->segment(1) == 'daftar_siswa') ? 'active' : '' ?>">
               <a class="nav-link" href="<?= base_url() ?>daftar_siswa">
                 <i class="material-icons">group</i>
                 <p>Daftar siswa</p>
               </a>
             </li>
-            <li class="nav-item ">
+            <li class="nav-item <?= ($this->uri->segment(1) == 'daftar_kelas') ? 'active' : '' ?>">
               <a class="nav-link" href="<?= base_url() ?>daftar_kelas">
                 <i class="material-icons">supervised_user_circle</i>
                 <p>Daftar Kelas</p>
               </a>
             </li>
-            <li class="nav-item ">
+            <li class="nav-item <?= ($this->uri->segment(1) == 'daftar_guru') ? 'active' : '' ?>">
               <a class="nav-link" href="<?= base_url() ?>daftar_guru">
                 <i class="material-icons">school</i>
                 <p>Daftar guru</p>
               </a>
             </li>
-            <li class="nav-item ">
+            <li class="nav-item <?= ($this->uri->segment(1) == 'daftar_pelanggaran') ? 'active' : '' ?>">
               <a class="nav-link" href="<?= base_url() ?>daftar_pelanggaran">
                 <i class="material-icons">content_paste</i>
                 <p>Daftar pelanggaran</p>
               </a>
             </li>
-            <li class="nav-item ">
+            <li class="nav-item <?= ($this->uri->segment(1) == 'histori_laporan') ? 'active' : '' ?>">
               <a class="nav-link" href="<?= base_url() ?>histori_laporan">
                 <i class="material-icons">report</i>
                 <p>Histori Laporan </p>
               </a>
             </li>
-            <li class="nav-item ">
+            <li class="nav-item <?= ($this->uri->segment(1) == 'daftar_bimbingan') ? 'active' : '' ?>">
               <a class="nav-link" href="<?= base_url() ?>daftar_bimbingan">
                 <i class="material-icons">info_outline</i>
                 <p>Daftar siswa bimbingan</p>
               </a>
             </li>
-            <li class="nav-item ">
+            <li class="nav-item <?= ($this->uri->segment(1) == 'tahun_ajaran') ? 'active' : '' ?>">
               <a class="nav-link" href="<?= base_url() ?>tahun_ajaran">
                 <i class="material-icons">event</i>
                 <p>Tahun Akademik</p>
               </a>
             </li>
-            <li class="nav-item ">
+            <li class="nav-item <?= ($this->uri->segment(1) == 'surat') ? 'active' : '' ?>">
               <a class="nav-link" href="<?= base_url() ?>surat">
                 <i class="material-icons">print</i>
                 <p>Surat</p>

@@ -62,7 +62,7 @@
 <div class="row">
     <?php
     $total_siswa = $this->db->count_all('siswa');
-    $total_kelas = $this->db->query('select * from data_value where type_value="KELAS"')->num_rows();
+    $total_kelas = $this->db->query('select id_kelas from kelas')->num_rows();
     $total_guru = $this->db->count_all('guru');
     $total_bimbingan = $this->db->count_all('bimbingan');
     ?>
@@ -140,6 +140,7 @@
                                     </tr>
                                     <?php
                                     $jumlah_laporan = $this->m_laporan->getLaporanPelanggaran($this->session->userdata('level_akses'))->num_rows();
+                                  
                                     $nomor = 1; // Inisialisasi nomor urut
                                     if ($jumlah_laporan > 0) {
                                         $getdataPelanggaran = $this->m_laporan->getLaporanPelanggaran($this->session->userdata('level_akses'));
@@ -154,7 +155,7 @@
                                         <td><?= $row['deskripsi_pelanggaran'] ?></td>
                                         <td><?= $row['nama_guru'] ?></td>
                                         <td class="td-actions text-right">
-                                            <button type="button" rel="tooltip" title="Beri Point" data-toggle="modal" data-target=".bd-example-modal-lg" class="btn btn-primary" data-nis="<?= $row['id_siswa'] ?>" data-laporan="<?= $row['id_laporan'] ?>">
+                                            <button type="button" rel="tooltip" title="Beri Point" data-toggle="modal" data-target=".bd-example-modal-lg" class="btn btn-primary" data-nis="<?= $row['nis_siswa'] ?>" data-laporan="<?= $row['id_laporan'] ?>">
                                                 <i class="material-icons">warning</i>
                                                 Beri Poin
                                             </button> &nbsp;

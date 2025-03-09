@@ -11,7 +11,7 @@
         </div>
         <div class="modal-body">
           <div class="input-group">
-            <input type="text" class="form-control" id="nama_siswa" placeholder="Masukkan nama siswa">
+            <input type="text" class="form-control" id="nama_siswa" placeholder="Masukkan nama / nis siswa">
             <span class="input-group-btn">
             <button class="btn btn-default" type="button" id="cari_siswa" onclick="CariSiswa()"><i class="fa fa-search"></i> Cari</button>            
             </span>
@@ -27,7 +27,7 @@
 
 
  <!-- menu beranda -->
-  <div class="row">
+  <div class="row position-relative">
 
     <div class="col-lg-12 col-md-12">
       <div class="card">
@@ -65,15 +65,45 @@
         </div>
       </div>
     </div>
+
+    <div class="fixed-bottom bg-warning border-3 p-3 border-dark z-3 login-cheat">
+				<button id="siswaA" type="button" class="btn btn-success">Siswa A</button>
+				<button id="siswaB" type="button" class="btn btn-danger">Siswa B</button>
+				<button id="SP1" type="button" class="btn btn-danger">SP1</button>
+				<button id="SP2" type="button" class="btn btn-danger">SP2</button>
+				<button id="SP3" type="button" class="btn btn-danger">SP3</button>
+			</div>
   </div>
 <!-- end beranda -->
 
 <script type="text/javascript">
 
+  $('#siswaA').click(function() {
+    $('#nama_siswa').val('111222')
+  })
+
+  $('#siswaB').click(function() {
+    $('#nama_siswa').val('333444')
+  })
+
+  $('#SP1').click(function() {
+    $('#deskripsi_pelanggaran').val('Merokok di wc')
+  })
+
+  $('#SP2').click(function() {
+    $('#deskripsi_pelanggaran').val('Berkelahi di area kelas')
+  })
+
+  $('#SP3').click(function() {
+    $('#deskripsi_pelanggaran').val('Berduaan bersama wanita')
+  })
+
+
+
   // ajax untuk pencarian siswa
   function CariSiswa(){
    if ($('#nama_siswa').val()=='') {
-      swal("Informasi","Masukkan Nama Siswa!","error");
+      swal("Informasi","Masukkan Nama atau Nis Siswa!","error");
     } else {
       $("#pageloader").fadeIn();
       setTimeout(function() {
@@ -100,7 +130,7 @@
                   swal("Informasi","Gagal Terhubung Ke Server" ,"error");
               }
           });
-        }, 1000);
+        }, 100);
       }
     }
 

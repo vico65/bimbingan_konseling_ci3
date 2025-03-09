@@ -2,9 +2,9 @@
 defined('BASEPATH') OR exit('No direct script access allowed');
 
 class M_laporan extends CI_Model{
-	public function insertPoinLaporan($id_siswa, $total_poin, $id_laporan, $id_pelanggaran, $poin_pelanggaran) {
+	public function insertPoinLaporan($nis_siswa, $total_poin, $id_laporan, $id_pelanggaran, $poin_pelanggaran) {
 		// Validasi input
-		if (empty($id_siswa) || empty($total_poin) || empty($id_laporan) || empty($id_pelanggaran) || empty($poin_pelanggaran)) {
+		if (empty($nis_siswa) || empty($total_poin) || empty($id_laporan) || empty($id_pelanggaran) || empty($poin_pelanggaran)) {
 			echo json_encode(array('status' => 'error', 'message' => 'Input tidak valid'));
 			exit; // Menghentikan eksekusi agar tidak ada output lain
 		}
@@ -18,7 +18,7 @@ class M_laporan extends CI_Model{
 		$tahun_aktif = $tahun_ajaran_aktif->tahun_akademik;
 	
 		// Ambil poin lama siswa
-		$poin_lama = $this->db->get_where('siswa', array('id_siswa' => $id_siswa))->row();
+		$poin_lama = $this->db->get_where('siswa', array('nis_siswa' => $nis_siswa))->row();
 		if (!$poin_lama) {
 			echo json_encode(array('status' => 'error', 'message' => 'Siswa tidak ditemukan'));
 			exit;
@@ -36,7 +36,7 @@ class M_laporan extends CI_Model{
 	
 		// Update poin siswa
 		$siswa = array('poin_siswa' => $poin_baru);
-		$this->db->where('id_siswa', $id_siswa);
+		$this->db->where('nis_siswa', $nis_siswa);
 		if (!$this->db->update('siswa', $siswa)) {
 			echo json_encode(array('status' => 'error', 'message' => 'Gagal memperbarui poin siswa'));
 			exit;
@@ -60,7 +60,7 @@ class M_laporan extends CI_Model{
 	
 		// Panggil fungsi dari model M_bimbingan
 		$this->load->model('M_bimbingan');
-		$this->m_bimbingan->CekDataBimbingan($id_siswa, $poin_baru, $id_laporan);
+		$this->m_bimbingan->CekDataBimbingan($nis_siswa, $poin_baru, $id_laporan);
 	
 		echo json_encode(array('status' => 'success', 'message' => 'Poin berhasil ditambahkan'));
 		exit;
@@ -102,7 +102,7 @@ class M_laporan extends CI_Model{
 	
 		// Memanggil fungsi dari model M_bimbingan untuk mengecek data bimbingan
 		$this->load->model('M_bimbingan');
-		$this->m_bimbingan->CekDataBimbingan($siswa->id_siswa, $poin_baru, $id_laporan);
+		$this->m_bimbingan->CekDataBimbingan($siswa->nis_siswa, $poin_baru, $id_laporan);
 	
 		foreach ($id_pelanggaran_array as $id_pelanggaran) {
 			// Persiapkan data untuk laporan
@@ -110,7 +110,7 @@ class M_laporan extends CI_Model{
 				'nis_siswa' => $siswa->nis_siswa,
 				'id_pelanggaran' => $id_pelanggaran,
 				'poin_pelanggaran' => $poin,
-				'id_guru' => $this->session->userdata('id'),
+				'nip_nuptk' => $this->session->userdata('id'),
 				'deskripsi_pelanggaran' => 'Poin siswa bertambah ' . $poin . ' poin.',
 				'tanggal_konfirmasi_pelanggaran' => date('Y-m-d'),
 				'tahun_akademik' => $tahun_aktif,
@@ -153,9 +153,9 @@ class M_laporan extends CI_Model{
 				guru.`nama_guru`,
 				siswa.nama_siswa,
 				kelas.nama_kelas, -- Mengambil nama_kelas
-				siswa.id_siswa
+				siswa.nis_siswa
 				FROM laporan
-				INNER JOIN guru ON guru.`id_guru` = laporan.`id_guru`
+				INNER JOIN guru ON guru.`nip_nuptk` = laporan.`nip_nuptk`
 				INNER JOIN siswa ON siswa.`nis_siswa` = laporan.`nis_siswa`
 				INNER JOIN kelas ON kelas.`id_kelas` = siswa.`kelas` -- Menghubungkan ke tabel kelas
 				WHERE laporan.status_validasi = 'B'
@@ -169,7 +169,7 @@ class M_laporan extends CI_Model{
 				kelas.nama_kelas,
 				pelanggaran.kode_pelanggaran -- Mengambil kode_pelanggaran dari tabel pelanggaran
 				FROM laporan
-				INNER JOIN guru ON guru.id_guru = laporan.id_guru
+				INNER JOIN guru ON guru.nip_nuptk = laporan.nip_nuptk
 				INNER JOIN siswa ON siswa.nis_siswa = laporan.nis_siswa
 				INNER JOIN kelas ON kelas.id_kelas = siswa.kelas
 				INNER JOIN pelanggaran ON pelanggaran.id = laporan.id_pelanggaran -- Menghubungkan ke tabel pelanggaran
@@ -177,17 +177,17 @@ class M_laporan extends CI_Model{
 			");
 		} else if ($type_akses == 'guru') {
 			// Guru melihat semua laporan yang dibuat oleh mereka, diurutkan dari yang terbaru
-			$id_guru = $this->session->userdata('id'); // id guru dari sesi
+			$nip_nuptk = $this->session->userdata('id'); // id guru dari sesi
 			$q = $this->db->query("SELECT 
 				laporan.*,
 				guru.nama_guru,
 				siswa.nama_siswa,
 				kelas.nama_kelas
 				FROM laporan
-				INNER JOIN guru ON guru.id_guru = laporan.id_guru
+				INNER JOIN guru ON guru.nip_nuptk = laporan.nip_nuptk
 				INNER JOIN siswa ON siswa.nis_siswa = laporan.nis_siswa
 				INNER JOIN kelas ON kelas.id_kelas = siswa.kelas
-				WHERE laporan.id_guru = $id_guru
+				WHERE laporan.nip_nuptk = $nip_nuptk
 				ORDER BY laporan.create_date DESC
 			");
 		}else if ($type_akses == 'murid') {
@@ -198,7 +198,7 @@ class M_laporan extends CI_Model{
 				kelas.nama_kelas, -- Mengambil nama_kelas
 				pelanggaran.kode_pelanggaran -- Mengambil kode_pelanggaran dari tabel pelanggaran
 				FROM laporan
-				INNER JOIN guru ON guru.`id_guru` = laporan.`id_guru`
+				INNER JOIN guru ON guru.`nip_nuptk` = laporan.`nip_nuptk`
 				INNER JOIN siswa ON siswa.`nis_siswa` = laporan.`nis_siswa`
 				INNER JOIN kelas ON kelas.`id_kelas` = siswa.`kelas` -- Menghubungkan ke tabel kelas
 				INNER JOIN pelanggaran ON pelanggaran.id_pelanggaran = laporan.id_pelanggaran -- Menghubungkan ke tabel pelanggaran
@@ -215,7 +215,7 @@ class M_laporan extends CI_Model{
 				kelas.nama_kelas,
 				pelanggaran.kode_pelanggaran -- Mengambil kode_pelanggaran dari tabel pelanggaran
 				FROM laporan
-				INNER JOIN guru ON guru.id_guru = laporan.id_guru
+				INNER JOIN guru ON guru.nip_nuptk = laporan.nip_nuptk
 				INNER JOIN siswa ON siswa.nis_siswa = laporan.nis_siswa
 				INNER JOIN kelas ON kelas.id_kelas = siswa.kelas
 				INNER JOIN pelanggaran ON pelanggaran.id_pelanggaran = laporan.id_pelanggaran -- Menghubungkan ke tabel pelanggaran
@@ -236,7 +236,7 @@ class M_laporan extends CI_Model{
 			pelanggaran.kode_pelanggaran
 		');
 		$this->db->from('laporan');
-		$this->db->join('guru', 'guru.id_guru = laporan.id_guru');
+		$this->db->join('guru', 'guru.nip_nuptk = laporan.nip_nuptk');
 		$this->db->join('siswa', 'siswa.nis_siswa = laporan.nis_siswa');
 		$this->db->join('kelas', 'kelas.id_kelas = siswa.kelas');
 		$this->db->join('pelanggaran', 'pelanggaran.id_pelanggaran = laporan.id_pelanggaran');
@@ -258,7 +258,7 @@ class M_laporan extends CI_Model{
 		$data_siswa=$this->db->get_where('siswa', array('nis_siswa' => $nis))->row();
 		$laporan=array(
 			'nis_siswa' => $nis, 
-			'id_guru' => $this->session->userdata('id'), 
+			'nip_nuptk' => $this->session->userdata('id'), 
 			'deskripsi_pelanggaran' => $deskripsi, 
 			'tahun_akademik' => '2024/2025',
 			'create_date' => date('Y-m-d H:i:s'), 

@@ -29,8 +29,8 @@ class Suratpdf extends CI_Controller {
         return $hariIndonesia[$hariInggris];
     }
 
-    public function suratPemanggilan($id_siswa) { 
-        $siswa = $this->m_siswa->getSiswaId($id_siswa);
+    public function suratPemanggilan($nis_siswa) { 
+        $siswa = $this->m_siswa->getSiswaId($nis_siswa);
         if (!$siswa) {
             show_error('Data siswa tidak ditemukan.');
             return;
@@ -54,25 +54,6 @@ class Suratpdf extends CI_Controller {
             return;
         }
 
-        // Tentukan jenis surat berdasarkan kode_bimbingan
-        // switch ($bimbingan['kode_bimbingan']) {
-        //     case 'SP1':
-        //         $hal_surat = "Surat Panggilan Siswa Ke 1";
-        //         break;
-        //     case 'SP2':
-        //         $hal_surat = "Surat Panggilan Siswa Ke 2";
-        //         break;
-        //     case 'SP3':
-        //         $hal_surat = "Surat Panggilan Siswa Ke 3";
-        //         break;
-        //     case 'Berhenti':
-        //         $hal_surat = "Surat Pembicaraan Pemberhentian";
-        //         break;
-        //     default:
-        //         $hal_surat = "Surat Pemanggilan Siswa";
-        //         break;
-        // }
-
         $hal_surat = "Surat Pemanggilan Siswa";
 
         // Konversi tanggal dan hari ke bahasa Indonesia
@@ -92,7 +73,7 @@ class Suratpdf extends CI_Controller {
         ];
 
         // Load view dengan data
-        $html = $this->load->view('adminbk/surat_pemanggilan', $data, true);
+        $html = $this->load->view('surat/surat_pemanggilan', $data, true);
 
         // Load library PDF
         $this->pdf->loadHtml($html);

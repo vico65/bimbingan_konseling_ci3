@@ -21,7 +21,12 @@ class Web extends CI_Controller {
 	 */
 	public function index()
 	{
+		// if(!$this->session->userdata('level_akses')) {
 		$this->load->view('login');
+		// } else {
+		// 	$this->beranda();
+		// }
+		
 	}
 
 	

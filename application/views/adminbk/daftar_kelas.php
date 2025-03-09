@@ -111,12 +111,7 @@
         </button>
       </div>
       <div class="modal-body">
-        <input type="hidden" id="id_siswa" readonly="">
-        
-        <div class="form-group">
-          <label for="nis_update" style="font-weight: bold;">NIS</label>
-          <input type="text" class="form-control" id="nis_update" required>
-        </div>
+        <input type="hidden" id="nis" readonly="">
 
         <div class="form-group">
           <label for="nama_update" style="font-weight: bold;">Nama</label>
@@ -127,16 +122,6 @@
           <label for="alamat_update" style="font-weight: bold;">Alamat</label>
           <input type="text" class="form-control" id="alamat_update" required>
         </div>
-
-        <!-- <div class="form-group">
-          <label for="kelas_update" style="font-weight: bold;">Kelas</label>
-          <select class="form-control" id="kelas_update" required>
-            <option value="">--Kelas--</option>
-            <?php foreach ($this->model_global->data_value('KELAS')->result_array() as $rowUpdate1): ?>
-              <option value="<?= $rowUpdate1['jenis_value'] ?>"><?= $rowUpdate1['deskripsi'] ?></option>
-            <?php endforeach; ?>
-          </select>
-        </div> -->
 
         <div class="form-group">
           <label for="jk_update" style="font-weight: bold;">Jenis Kelamin</label>
@@ -302,10 +287,10 @@ function showStudents(id_kelas) {
                     <td>${student.no_telephone_siswa}</td>
                     <td>${student.poin_siswa}</td>
                     <td>
-                       <button type="button" rel="tooltip" title="Edit data" class="btn btn-primary" onclick="getdataUpdateSiswa('${student.id_siswa}')">
+                       <button type="button" rel="tooltip" title="Edit data" class="btn btn-primary" onclick="getdataUpdateSiswa('${student.nis_siswa}')">
                             <i class="fa fa-pencil"></i>
                         </button>                    
-                        <button type="button" rel="tooltip" title="Hapus data" class="btn btn-danger" onclick="alertdelsiswa('${student.id_siswa}')">
+                        <button type="button" rel="tooltip" title="Hapus data" class="btn btn-danger" onclick="alertdelsiswa('${student.nis_siswa}')">
                             <i class="fa fa-trash"></i>
                         </button>                    
                         <button type="button" rel="tooltip" title="Tambah poin" class="btn btn-warning" onclick="parsingId('${student.nis_siswa}')" data-toggle="modal" data-target="#modal_poin">
@@ -486,9 +471,9 @@ function parsingId(nis) {
     $("#nis_siswa").val(nis);
 }
 
-function getdataUpdateSiswa(id) {
+function getdataUpdateSiswa(nis) {
     var hps = new FormData();
-    hps.append('id', id);
+    hps.append('nis', nis);
 
     $.ajax({
         url: '<?=base_url()?>Adminbk/SiswaController/GetDatasiswa',
@@ -502,14 +487,13 @@ function getdataUpdateSiswa(id) {
             if (data) {
                 // Tampilkan modal dan isi data
                 $('#modal_updatesiswa').modal('show');
-                $('#nis_update').val(data.nis);
+                $('#nis').val(data.nis);
                 $('#nama_update').val(data.nama);
                 $('#alamat_update').val(data.alamat);
                 $('#jk_update').val(data.jk);
                 $('#kelas_update').val(data.id_kelas);
                 $('#tgl_lahir_update').val(data.tgl_lahir);
                 $('#tlp_update').val(data.hp);
-                $('#id_siswa').val(data.id_siswa);
             } else {
                 swal("Informasi", "Data tidak ditemukan", "warning");
             }
@@ -526,8 +510,7 @@ function AksiUpdate() {
 
     // Siapkan data untuk dikirim
     var datasend = new FormData();
-    datasend.append('id_siswa', $("#id_siswa").val());
-    datasend.append('nis', $("#nis_update").val());
+    datasend.append('nis', $("#nis").val());
     datasend.append('nama', $('#nama_update').val());
     datasend.append('alamat', $('#alamat_update').val());
     datasend.append('jk', $('#jk_update').val());
@@ -561,27 +544,38 @@ function AksiUpdate() {
 }
 
 
-function alertdelsiswa(id) {
+function alertdelsiswa(nis) {
     var r = confirm("Yakin ingin menghapus data yang dipilih?");
     if (r == true) {
-        HapusAlertSiswa(id);
+        HapusAlertSiswa(nis);
     } else {
         return false;
     }
 }
 
 
-function HapusAlertSiswa(id) {
+function HapusAlertSiswa(nis) {
         var hps = new FormData();
-        hps.append('id_siswa',id);
+        hps.append('nis_siswa',nis);
         $.ajax({
             url   :'<?=base_url()?>Adminbk/SiswaController/HapusSiswa',
             method:'POST',
             contentType: false,      
                 processData:false, 
             data  :hps,
-            success: function(data) {
-                location.reload();
+            success: function(response) {
+              try {
+                    let result = typeof response === 'string' ? JSON.parse(response) : response;
+
+                    if (result.status === 'success') {
+                        swal("Informasi", result.message, "success").then(() => location.reload());
+                    } else {
+                        swal("Informasi", result.message, "error");
+                    }
+                } catch (e) {
+                    console.log("Parsing error:", e, "Response:", response);
+                    swal("Informasi", "Respon tidak valid dari server", "error");
+                }
             },error: function(data){
                console.log(data);
             }

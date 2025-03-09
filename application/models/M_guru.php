@@ -9,7 +9,7 @@ class M_guru extends CI_Model{
 	}
 
     //query CRUD guru
-	public function AksiTambahGuru($nama,$nip,$alamat,$jk,$notlp,$username,$pass,$jabatan, $level){
+	public function AksiTambahGuru($nama,$nip,$alamat,$jk,$notlp,$username,$pass,$jabatan){
 		$data=array( 
 			'nip_nuptk' => $nip, 
 			'nama_guru' => $nama, 
@@ -23,23 +23,39 @@ class M_guru extends CI_Model{
 			'create_date'=> date('Y-m-d H:i:s')
 		);
 		$this->db->insert('guru',$data);
-		echo "sukses";
+		return true;
 	}
 
-	public function AksiHapusGuru($id){
-		$q=$this->db->query('DELETE FROM guru WHERE id_guru ='.$id);
+	public function AksiHapusGuru($nip_nuptk){
+		$q=$this->db->query('DELETE FROM guru WHERE nip_nuptk ='.$nip_nuptk);
 		return $q;
-		echo "sukses";
 	}	
 
-	public function GetDataGuru($id){
-		$q=$this->db->query('SELECT * FROM guru WHERE id_guru ='.$id)->row();
-		echo json_encode(array('id'=>$q->id_guru,'nip' => $q->nip_nuptk,'jabatan' => $q->jabatan,'nama' => $q->nama_guru,'alamat_guru'=> $q->alamat_guru,'jk'=>$q->jenis_kelamin,'hp'=>$q->no_telephone_guru,'username'=>$q->username_guru,'password'=>$q->password_guru));
+	public function GetDataGuru($nip_nuptk){
+		$q=$this->db->query('SELECT * FROM guru WHERE nip_nuptk ='.$nip_nuptk)->row();
+
+		if(!$q) {
+			return false;
+		}
+		
+		echo json_encode(array('nip' => $q->nip_nuptk,'jabatan' => $q->jabatan,'nama' => $q->nama_guru,'alamat_guru'=> $q->alamat_guru,'jk'=>$q->jenis_kelamin,'hp'=>$q->no_telephone_guru,'username'=>$q->username_guru,'password'=>$q->password_guru));
 	}
 
-	public function aksiUpdateGuru($id,$nip,$nama,$alamat,$jk,$notlp,$username,$pass,$jabatan){
+	public function GetDataGuruForInsert($nip_nuptk){
+		$this->db->where('nip_nuptk', $nip_nuptk);
+		$q = $this->db->get('guru');
+		
+		if ($q->num_rows() > 0) {
+			return $q->row_array(); // Mengembalikan data siswa dengan nama kelas
+		} else {
+			return false; // Jika tidak ada siswa ditemukan
+		}
+	}
+
+
+
+	public function aksiUpdateGuru($nip_nuptk,$nama,$alamat,$jk,$notlp,$username,$pass,$jabatan){
 		$data=array( 
-			'nip_nuptk' => $nip, 
 			'jabatan' => $jabatan, 
 			'nama_guru' => $nama, 
 			'alamat_guru' => $alamat, 
@@ -50,9 +66,10 @@ class M_guru extends CI_Model{
 			'create_who'=> $this->session->userdata('username'),
 			'create_date'=> date('Y-m-d H:i:s')
 		);
-		$this->db->where('id_guru',$id);
+		$this->db->where('nip_nuptk',$nip_nuptk);
 		$this->db->update('guru',$data);
-		echo "sukses";	
+
+		return $nip_nuptk;
 	}
 
 }

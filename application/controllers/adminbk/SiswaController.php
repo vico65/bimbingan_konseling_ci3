@@ -15,6 +15,11 @@ class SiswaController extends CI_Controller {
 		$tempat_lahir = $this->input->post('tempat_lahir');
 		$tlp = $this->input->post('no_telephone_siswa');
 		$status_pengasuh = $this->input->post('status_pengasuh');
+
+		if($this->m_siswa->getSiswaById($nis)) {
+			echo json_encode(array('status' => 'failed', 'message' => 'Data siswa dengan nis ' . $nis . ' telah ada di database!'));
+			return;
+		};
 		
 
 		// Data siswa
@@ -47,25 +52,26 @@ class SiswaController extends CI_Controller {
 		$this->m_siswa->AksiTambahSiswa($data_siswa, $data_wali);
 
 		// Mengirimkan response JSON
-		echo json_encode(array('status' => 'success'));
+		echo json_encode(array('status' => 'success', 'message' => 'Data siswa dan wali siswa dengan nis ' . $nis . ' telah ditambahkan!'));
 		
 	}
 
 	public function HapusSiswa()
 	{
-		$id=$this->input->post('id_siswa');
-		$this->m_siswa->AksiHapusSiswa($id);
+		$nis=$this->input->post('nis_siswa');
+		$this->m_siswa->AksiHapusSiswa($nis);
+
+		echo json_encode(array('status' => 'success', 'message' => 'Data siswa telah dihapus!'));
 	}
 
 	public function GetDatasiswa()
 	{
-		$id=$this->input->post('id');
-		$this->m_siswa->GetDatasiswa($id);
+		$nis=$this->input->post('nis');
+		$this->m_siswa->GetDatasiswa($nis);
 	}
 
 	public function aksiUpdateSiswa()
 	{
-		$id_siswa = $this->input->post('id_siswa');
 		$nis = $this->input->post('nis');
 		$nama = $this->input->post('nama');
 		$alamat = $this->input->post('alamat');
@@ -77,7 +83,7 @@ class SiswaController extends CI_Controller {
 		$status_pengasuh = $this->input->post('status_pengasuh');
 
 		// Panggil model untuk melakukan update data siswa
-		$this->m_siswa->aksiUpdateSiswa($id_siswa, $nis, $nama, $alamat, $jk, $kelas, $tempat_lahir, $tgl_lahir, $tlp, $status_pengasuh);
+		$this->m_siswa->aksiUpdateSiswa($nis, $nama, $alamat, $jk, $kelas, $tempat_lahir, $tgl_lahir, $tlp, $status_pengasuh);
 	}
 
 }

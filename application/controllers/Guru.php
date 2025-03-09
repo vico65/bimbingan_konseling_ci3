@@ -46,9 +46,14 @@ class Guru extends CI_Controller {
 	public function cariSiswa() {
 		// Mendapatkan input nama siswa dari form
 		$data['nama_siswa'] = $this->input->post('nama');
-		
-		// Mengambil hasil pencarian dari model
-		$data['query'] = $this->m_siswa->cariSiswa($data['nama_siswa']);
+
+		if (strlen($data['nama_siswa']) == 6 && ctype_digit($data['nama_siswa'])) {
+			$data['query'] = $this->m_siswa->cariSiswaByNis($data['nama_siswa']);
+		} else {
+			// Mengambil hasil pencarian dari model
+			$data['query'] = $this->m_siswa->cariSiswa($data['nama_siswa']);
+		}
+
 		
 		// Memeriksa apakah data siswa ditemukan
 		$cek_siswa = $data['query']->num_rows(); // Menggunakan num_rows() untuk menghitung jumlah baris

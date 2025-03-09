@@ -30,11 +30,11 @@ class M_bimbingan extends CI_Model
 		return $this->db->get();
 	}
 
-	public function CekDataBimbingan($id_siswa, $poin, $id_laporan)
+	public function CekDataBimbingan($nis_siswa, $poin, $id_laporan)
 	{
-		$cekPoin = $this->db->get_where('siswa', array('id_siswa' => $id_siswa))->row();
+		$cekPoin = $this->db->get_where('siswa', array('nis_siswa' => $nis_siswa))->row();
 		if (!$cekPoin) {
-			log_message('error', 'Siswa dengan ID ' . $id_siswa . ' tidak ditemukan.');
+			log_message('error', 'Siswa dengan ID ' . $nis_siswa . ' tidak ditemukan.');
 			return false;
 		}
 
@@ -68,12 +68,12 @@ class M_bimbingan extends CI_Model
 		// ))->row();
 
 		// if (!$cekBimbingan) {
-		$this->InsertBimbinganSiswa($id_siswa, $poin, $id_laporan, $jenis);
+		$this->InsertBimbinganSiswa($nis_siswa, $poin, $id_laporan, $jenis);
 		// }
 	}
 
 
-	public function InsertBimbinganSiswa($id_siswa, $poin, $id_laporan, $jenis)
+	public function InsertBimbinganSiswa($nis_siswa, $poin, $id_laporan, $jenis)
 	{
 		// Ambil tahun ajaran aktif
 		$tahun_akademik_aktif = $this->db->get_where('tahun_akademik', array('status_akademik' => 'aktif'))->row();
@@ -84,9 +84,8 @@ class M_bimbingan extends CI_Model
 		$tahun_aktif = $tahun_akademik_aktif->tahun_akademik;
 
 		// Ambil data siswa
-		$data_siswa = $this->db->get_where('siswa', array('id_siswa' => $id_siswa))->row();
+		$data_siswa = $this->db->get_where('siswa', array('nis_siswa' => $nis_siswa))->row();
 		if (!$data_siswa) {
-			// log_message('error', 'Data siswa tidak ditemukan untuk ID: ' . $id_siswa);
 			return false;
 		}
 
@@ -105,7 +104,6 @@ class M_bimbingan extends CI_Model
 		// Buat data bimbingan baru
 		$bimbingan = array(
 			'nis_siswa' => $data_siswa->nis_siswa,
-			'id_siswa' => $data_siswa->id_siswa,
 			'kode_bimbingan' => $jenis,
 			'tanggal_bimbingan' => date('Y-m-d'),
 			'poin_pelanggaran' => $poin,
@@ -120,13 +118,13 @@ class M_bimbingan extends CI_Model
 		if ($id_bimbingan > 0) {
 			// log_message('info', 'Bimbingan berhasil dibuat dengan ID: ' . $id_bimbingan);
 			$sp = ($jenis == 'SP1') ? 1 : (($jenis == 'SP2') ? 2 : 3);
-			$this->buatJadwalBimbingan($id_bimbingan, $sp, $id_laporan, $id_siswa);
+			$this->buatJadwalBimbingan($id_bimbingan, $nis_siswa);
 		} else {
 			log_message('error', 'Gagal menyimpan bimbingan.');
 		}
 	}
 
-	public function buatJadwalBimbingan($id_bimbingan, $sp, $id_laporan, $id_siswa)
+	public function buatJadwalBimbingan($id_bimbingan, $nis_siswa)
 	{
 		$tanggal_awal = date('Y-m-d');
 		$jumlah_hari = 0;
@@ -143,7 +141,7 @@ class M_bimbingan extends CI_Model
 			'tanggal_bimbingan' => $tgl_jadwal,
 			'status_bimbingan' => 'Tidak Aktif',
 			'id_bimbingan' => $id_bimbingan,
-			'id_siswa' => $id_siswa
+			'nis_siswa' => $nis_siswa
 		);
 
 		$this->db->insert('jadwal_bimbingan', $jadwal);
@@ -215,7 +213,7 @@ class M_bimbingan extends CI_Model
 			$q = $this->db->query("
 				SELECT 
 					bimbingan.*, 
-					jadwal_bimbingan.tanggal_bimbingan, jadwal_bimbingan.id_bimbingan, jadwal_bimbingan.id_siswa
+					jadwal_bimbingan.tanggal_bimbingan, jadwal_bimbingan.id_bimbingan, jadwal_bimbingan.nis_siswa
 				FROM 
 					bimbingan 
 				INNER JOIN jadwal_bimbingan 
@@ -287,7 +285,7 @@ class M_bimbingan extends CI_Model
 		$this->db->select('bimbingan.*, jadwal_bimbingan.tanggal_bimbingan');
 		$this->db->from('jadwal_bimbingan');
 		$this->db->join('bimbingan', 'bimbingan.id_bimbingan = jadwal_bimbingan.id_jadwal_bimbingan', 'left');
-		$this->db->where('jadwal_bimbingan.id_siswa', $siswa_id);
+		$this->db->where('jadwal_bimbingan.nis_siswa', $siswa_id);
 		$this->db->order_by('jadwal_bimbingan.tanggal_bimbingan', 'DESC'); // Ambil yang terbaru
 		$this->db->limit(1);
 

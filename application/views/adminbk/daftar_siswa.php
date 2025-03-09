@@ -67,7 +67,7 @@
 <!-- Modal insert-->
 <!-- Modal untuk tambah siswa -->
 <div class="modal fade bd-example-modal-lg" id="modal_tambah" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
-  <div class="modal-dialog modal-lg">
+  <div class="modal-dialog modal-lg modal-dialog-scrollable">
     <div class="modal-content">
       <div class="modal-header">
         <h5 class="modal-title" id="exampleModalLabel"><b>Tambah Data Siswa dan Wali Siswa</b></h5>
@@ -76,15 +76,15 @@
         </button>
       </div>
       <form action="<?= base_url('Adminbk/SiswaController/aksiTambahSiswa') ?>" method="POST">
-        <div class="modal-body">
+        <div class="modal-body overflow-y-auto">
           <!-- Input data siswa -->
           <div class="form-group">
             <label for="nis">NIS</label>
-            <input type="text" name="nis" id="nis" class="form-control" required>
+            <input type="text" name="nis" id="nis" class="form-control"  required>
           </div>
           <div class="form-group">
             <label for="nama_siswa">Nama Siswa</label>
-            <input type="text" name="nama_siswa" id="nama_siswa" class="form-control" required>
+            <input type="text" name="nama_siswa" id="nama_siswa" class="form-control"  required>
           </div>
           <div >
             <div class="form-group bmd-form-group is-filled">
@@ -135,7 +135,7 @@
           
           <div class="form-group">
             <label for="no_telephone_siswa">No. Telepon Siswa</label>
-            <input type="text" name="no_telephone_siswa" id="no_telephone_siswa" class="form-control" required>
+            <input type="text" name="no_telephone_siswa" id="no_telephone_siswa" class="form-control"  required>
           </div>
 
           <!-- Data tambahan -->
@@ -157,15 +157,15 @@
           </div>
           <div class="form-group">
             <label for="alamat_wali_siswa">Alamat Wali Siswa</label>
-            <input type="text" name="alamat_wali_siswa" id="alamat_wali_siswa" class="form-control" required>
+            <input type="text" name="alamat_wali_siswa" id="alamat_wali_siswa" class="form-control"  required>
           </div>
           <div class="form-group">
             <label for="pekerjaan_wali">Pekerjaan Wali Siswa</label>
-            <input type="text" name="pekerjaan_wali" id="pekerjaan_wali" class="form-control" required>
+            <input type="text" name="pekerjaan_wali" id="pekerjaan_wali" class="form-control"  required>
           </div>
           <div class="form-group">
             <label for="no_telp_wali">No Telepon Wali Siswa</label>
-            <input type="text" name="no_telp_wali" id="no_telp_wali" class="form-control" required>
+            <input type="text" name="no_telp_wali" id="no_telp_wali" class="form-control"  required>
           </div>
 
         </div>
@@ -191,16 +191,10 @@
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
-      <div class="modal-body">
-        <input type="hidden" id="id_siswa" name="" readonly="">
+      <div class="modal-body">        
         <div class="col-lg-12 col-md-12">
           <div class="form-group bmd-form-group is-filled">
-            <label style="font-weight: bold;">NIS</label>
-            <input type="text" class="w3-input" id="nis_update">
-          </div>
-        </div>         
-        <div class="col-lg-12 col-md-12">
-          <div class="form-group bmd-form-group is-filled">
+            <input type="hidden" class="w3-input" id="nis_update">
             <label style="font-weight: bold;">Nama</label>
             <input type="text" class="w3-input" id="nama_update">
           </div>
@@ -284,7 +278,7 @@
 </div>
 
 
-<div class="row">
+<div class="row" >
 
   <div class="col-lg-12 col-md-12">
     <div class="card">
@@ -339,11 +333,11 @@
                           <td><?= $row['poin_siswa'] ?></td>
                           <?php if ($this->session->userdata('level_akses') == 'adminbk') : ?>
                               <td>
-                                <!-- ubah ini -->
-                                  <button type="button" rel="tooltip" title="Edit data" class="btn btn-primary" onclick="getdataUpdate('<?= $row['id_siswa'] ?>')">
+                                <!-- ubah_ini -->
+                                  <button type="button" rel="tooltip" title="Edit data" class="btn btn-primary" onclick="getdataUpdate('<?= $row['nis_siswa'] ?>')">
                                       <i class="fa fa-pencil"></i>
                                   </button>                    
-                                  <button type="button" rel="tooltip" title="Hapus data" class="btn btn-danger" onclick="alertdel('<?= $row['id_siswa'] ?>')">
+                                  <button type="button" rel="tooltip" title="Hapus data" class="btn btn-danger" onclick="alertdel('<?= $row['nis_siswa'] ?>')">
                                       <i class="fa fa-trash"></i>
                                   </button>                    
                                   <button type="button" rel="tooltip" title="Tambah poin" class="btn btn-warning" onclick="parsingId('<?= $row['nis_siswa'] ?>')" data-toggle="modal" data-target="#modal_poin">
@@ -385,17 +379,20 @@
             data: $(this).serialize(), // Serialize form data
             dataType: 'json',
             success: function(response){
-              if(response.status == 'success'){
-                // Tutup modal
-                $('#modal_tambah').modal('hide');
+              try {
+                    let result = typeof response === 'string' ? JSON.parse(response) : response;
 
-                // Menampilkan pesan sukses (opsional)
-                alert("Data siswa dan wali berhasil ditambahkan.");
+                    if (result.status === 'success') {
+                        // Tutup modal
+                        $('#modal_tambah').modal('hide');
 
-                // Refresh halaman
-                location.reload();
-              } else {
-                alert('Terjadi kesalahan. Silakan coba lagi.');
+                        swal("Informasi", result.message, "success").then(() => location.reload());
+                    } else {
+                        swal("Informasi", result.message, "error");
+                    }
+              } catch (e) {
+                  console.log("Parsing error:", e, "Response:", response);
+                  swal("Informasi", "Respon tidak valid dari server", "error");
               }
             },
             error: function(){
@@ -455,35 +452,48 @@
     }
 
 
-    function alertdel(id){
+    function alertdel(nis){
         var r = confirm("Yakin ingin menghapus data yang dipilih?");
         if (r == true) {
-          HapusAlert(id);
+          HapusAlert(nis);
         } else {
           return true;
         }
     }
 
-    function HapusAlert(id) {
+    function HapusAlert(nis) {
         var hps = new FormData();
-        hps.append('id_siswa',id);
+        hps.append('nis_siswa',nis);
         $.ajax({
             url   :'<?=base_url()?>Adminbk/SiswaController/HapusSiswa',
             method:'POST',
             contentType: false,      
                 processData:false, 
             data  :hps,
-            success: function(data) {
-                location.reload();
-            },error: function(data){
-               console.log(data);
+            success: function(response) {
+              try {
+                    let result = typeof response === 'string' ? JSON.parse(response) : response;
+
+                    if (result.status === 'success') {
+                        swal("Informasi", result.message, "success").then(() => location.reload());
+                    } else {
+                        swal("Informasi", result.message, "error");
+                    }
+                } catch (e) {
+                    console.log("Parsing error:", e, "Response:", response);
+                    swal("Informasi", "Respon tidak valid dari server", "error");
+                }
+            },
+            error: function(xhr, status, error) {
+                console.log("Error Details:", xhr, status, error);
+                swal("Informasi", "Gagal Terhubung Ke Server", "error");
             }
         });
     }
 
-    function getdataUpdate(id) {
+    function getdataUpdate(nis) {
         var hps = new FormData();
-        hps.append('id',id);
+        hps.append('nis',nis);
         $.ajax({
             url   :'<?=base_url()?>Adminbk/SiswaController/GetDatasiswa',
             method:'POST',
@@ -505,8 +515,6 @@
               $('#tgl_lahir_update').val(data.tgl_lahir);
               $('#tlp_update').val(data.hp);
               $('#status_pengasuh_update').val(data.status_pengasuh);
-              
-              $('#id_siswa').val(data.id_siswa);
             },error: function(data){
                console.log(data);
             }
@@ -517,8 +525,7 @@
         $('#pageloader').fadeIn();
         setTimeout(function() {
         var datasend = new FormData();
-        datasend.append('id_siswa', $("#id_siswa").val());  // This is the hidden id_siswa
-        datasend.append('nis', $("#nis_update").val());
+        datasend.append('nis', $("#nis_update").val()); // This is the hidden nis_siswa
         datasend.append('nama', $('#nama_update').val());
         datasend.append('alamat', $('#alamat_update').val());
         datasend.append('jk', $('#jk_update').val());

@@ -17,12 +17,7 @@ class M_siswa extends CI_Model
 
 		return $q;
 	}
-
-	//query untuk memfilter siswa(2)
-	// public function cariSiswa($nama){
-	// 	$q=$this->db->query("SELECT * from siswa where nama_siswa like '%".$nama."%'");
-	// 	return $q;
-	// }	
+	
 	public function cariSiswa($nama)
 	{
 		// Query dengan JOIN untuk mendapatkan nama_kelas
@@ -30,6 +25,18 @@ class M_siswa extends CI_Model
 		$this->db->from('siswa');
 		$this->db->join('kelas', 'siswa.kelas = kelas.id_kelas'); // Join tabel kelas
 		$this->db->like('siswa.nama_siswa', $nama); // Mencari berdasarkan nama siswa
+		$query = $this->db->get();
+
+		return $query; // Mengembalikan objek query
+	}
+
+	public function cariSiswaByNis($nis)
+	{
+		// Query dengan JOIN untuk mendapatkan nama_kelas
+		$this->db->select('siswa.*, kelas.nama_kelas');
+		$this->db->from('siswa');
+		$this->db->join('kelas', 'siswa.kelas = kelas.id_kelas'); // Join tabel kelas
+		$this->db->where('siswa.nis_siswa', $nis); // Mencari berdasarkan nama siswa
 		$query = $this->db->get();
 
 		return $query; // Mengembalikan objek query
@@ -48,9 +55,9 @@ class M_siswa extends CI_Model
 		return $q;
 	}
 
-	public function getSiswaById($id_siswa)
+	public function getSiswaById($nis_siswa)
 	{
-		$this->db->where('id_siswa', $id_siswa);
+		$this->db->where('nis_siswa', $nis_siswa);
 		$query = $this->db->get('siswa');
 
 		if ($query->num_rows() > 0) {
@@ -60,12 +67,12 @@ class M_siswa extends CI_Model
 		}
 	}
 
-	public function getSiswaId($id_siswa)
+	public function getSiswaId($nis_siswa)
 	{
 		$this->db->select('siswa.*, kelas.nama_kelas');
 		$this->db->from('siswa');
 		$this->db->join('kelas', 'kelas.id_kelas = siswa.kelas', 'left'); // JOIN dengan tabel kelas
-		$this->db->where('siswa.id_siswa', $id_siswa);
+		$this->db->where('siswa.nis_siswa', $nis_siswa);
 
 		$query = $this->db->get();
 
@@ -157,6 +164,7 @@ class M_siswa extends CI_Model
 	//query crud siswa
 	public function AksiTambahSiswa($data_siswa, $data_wali)
 	{
+
 		// Insert data siswa
 		$this->db->insert('siswa', $data_siswa);
 
@@ -166,26 +174,25 @@ class M_siswa extends CI_Model
 		return true;
 	}
 
-	public function AksiHapusSiswa($id)
+	public function AksiHapusSiswa($nis)
 	{
-		$q = $this->db->query('DELETE FROM siswa WHERE id_siswa =' . $id);
+		$q = $this->db->query('DELETE FROM siswa WHERE nis_siswa =' . $nis);
 		return $q;
 		echo "sukses";
 	}
 
-	public function GetDatasiswa($id)
+	public function GetDatasiswa($nis)
 	{
-		$this->db->select('siswa.id_siswa, siswa.nis_siswa, siswa.nama_siswa, siswa.kelas as id_kelas, kelas.nama_kelas, 
+		$this->db->select('siswa.nis_siswa, siswa.nama_siswa, siswa.kelas as id_kelas, kelas.nama_kelas, 
 						   siswa.alamat_siswa, siswa.jenis_kelamin, siswa.tanggal_lahir, siswa.tempat_lahir, 
 							siswa.no_telephone_siswa, siswa.status_pengasuh');
 		$this->db->from('siswa');
 		$this->db->join('kelas', 'siswa.kelas = kelas.id_kelas', 'left'); // Join tabel kelas
-		$this->db->where('siswa.id_siswa', $id);
+		$this->db->where('siswa.nis_siswa', $nis);
 		$q = $this->db->get()->row();
 
 		if ($q) {
 			echo json_encode(array(
-				'id_siswa' => $q->id_siswa,
 				'nis' => $q->nis_siswa,
 				'nama' => $q->nama_siswa,
 				'id_kelas' => $q->id_kelas, // ID kelas
@@ -204,10 +211,9 @@ class M_siswa extends CI_Model
 
 
 
-	public function aksiUpdateSiswa($id_siswa, $nis, $nama, $alamat, $jk, $kelas, $tempat_lahir, $tgl_lahir, $tlp, $status_pengasuh)
+	public function aksiUpdateSiswa($nis, $nama, $alamat, $jk, $kelas, $tempat_lahir, $tgl_lahir, $tlp, $status_pengasuh)
 	{
 		$data = array(
-			'nis_siswa' => $nis,
 			'nama_siswa' => $nama,
 			'kelas' => $kelas,
 			'alamat_siswa' => $alamat,
@@ -219,7 +225,7 @@ class M_siswa extends CI_Model
 		);
 
 		// Update data siswa berdasarkan ID
-		$this->db->where('id_siswa', $id_siswa);
+		$this->db->where('nis_siswa', $nis);
 		$this->db->update('siswa', $data);
 
 		// Response sukses jika berhasil

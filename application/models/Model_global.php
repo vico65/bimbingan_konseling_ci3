@@ -10,7 +10,7 @@ class Model_global extends CI_Model{
 
 	public function detectUserType($usr, $pwd) {
 		$tables = [
-			['table' => 'guru', 'username' => 'username_guru', 'password' => 'password_guru', 'id' => 'id_guru', 'name' => 'nama_guru'],
+			['table' => 'guru', 'username' => 'username_guru', 'password' => 'password_guru', 'id' => 'nip_nuptk', 'name' => 'nama_guru'],
 			['table' => 'siswa', 'username' => 'username_siswa', 'password' => 'password_siswa', 'id' => 'nis_siswa', 'name' => 'nama_siswa'],
 			['table' => 'wali_siswa', 'username' => 'username_wali_siswa', 'password' => 'password_wali_siswa', 'id' => 'id_wali', 'name' => 'nama_wali_siswa'],
 		];
@@ -73,7 +73,7 @@ class Model_global extends CI_Model{
 				$username=$row->username_guru;
 				$level_akses=$row->level_akses;
 				$nama=$row->nama_guru;
-				$id=$row->id_guru;
+				$id=$row->nip_nuptk;
 				$isLogin='yes';
 
 				echo json_encode(array("status"=>"valid","value"=>base_url()."beranda"));
@@ -91,7 +91,7 @@ class Model_global extends CI_Model{
 				$username=$row->username_guru;
 				$level_akses=$row->level_akses;
 				$nama=$row->nama_guru;
-				$id=$row->id_guru;
+				$id=$row->nip_nuptk;
 				$isLogin='yes';
 
 				echo json_encode(array("status"=>"valid","value"=>base_url()."beranda"));
@@ -127,7 +127,7 @@ class Model_global extends CI_Model{
 				$username=$row->username_guru;
 				$level_akses=$row->level_akses;
 				$nama=$row->nama_guru;
-				$id=$row->id_guru;
+				$id=$row->nip_nuptk;
 				$isLogin='yes';
 
 				echo json_encode(array("status"=>"valid","value"=>base_url()."beranda"));
@@ -189,7 +189,7 @@ class Model_global extends CI_Model{
 				guru.`nama_guru`,
 				siswa.nama_siswa,kelas
 				FROM laporan
-				INNER JOIN guru ON guru.`id_guru`= laporan.`id_guru`
+				INNER JOIN guru ON guru.`nip_nuptk`= laporan.`nip_nuptk`
 				INNER JOIN siswa ON siswa.`nis_siswa` = laporan.`nis_siswa`
 				WHERE $whereStr
 		");	
