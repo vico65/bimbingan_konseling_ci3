@@ -29,8 +29,17 @@ class Suratpdf extends CI_Controller {
         return $hariIndonesia[$hariInggris];
     }
 
+    private function getTanggalIndonesia($tanggal) {
+        $tanggal = explode(" ", $tanggal);
+        $bulanIndonesia = [
+            'Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni',
+            'Juli', 'Agustus', 'September', 'Oktober', 'November', 'Desember'
+        ];
+        return $tanggal[0] . ' ' . $bulanIndonesia[(int)$tanggal[1] - 1] . ' ' . $tanggal[2];
+    }
+
     public function suratPemanggilan($nis_siswa) { 
-        $siswa = $this->m_siswa->getSiswaId($nis_siswa);
+        $siswa = $this->m_siswa->getSiswaIdAndWali($nis_siswa);
         if (!$siswa) {
             show_error('Data siswa tidak ditemukan.');
             return;
@@ -47,6 +56,7 @@ class Suratpdf extends CI_Controller {
 
         // Ambil tanggal bimbingan dari tabel jadwal_bimbingan
         $tanggal_bimbingan = $this->m_bimbingan->getJadwalBimbinganById($bimbingan['id_bimbingan']);
+        // var_dump($tanggal_bimbingan);
 
         // Pastikan tanggal bimbingan tidak null
         if (!$tanggal_bimbingan) {
@@ -54,13 +64,29 @@ class Suratpdf extends CI_Controller {
             return;
         }
 
-        $hal_surat = "Surat Pemanggilan Siswa";
+        $tahun_ajaran_aktif = $this->db->get_where('tahun_akademik', array('status_akademik' => 'aktif'))->row_array();
+        $laporan = $this->m_laporan->getLaporanPelanggaranBySiswa($nis_siswa, $tahun_ajaran_aktif['tahun_akademik']);
 
         // Konversi tanggal dan hari ke bahasa Indonesia
-        $tanggal_bimbingan_format = date('d F Y', strtotime($tanggal_bimbingan['tanggal_bimbingan']));
+        $tanggal_bimbingan_format = $this->getTanggalIndonesia(date('d m Y', strtotime($tanggal_bimbingan['tanggal_bimbingan'])));
         $hari_bimbingan = $this->getHariIndonesia($tanggal_bimbingan['tanggal_bimbingan']);
         $kode_bimbingan = $bimbingan['kode_bimbingan'];
         $poin_pelanggaran = $bimbingan['poin_pelanggaran'];
+        $apakahDiberhentikan = false;
+        $apakahSP3 = false;
+
+        if($poin_pelanggaran == 100) {
+            $hal_surat = "Surat Pernyataan Pengunduran Diri";
+            $apakahDiberhentikan = true;
+        }
+        else if($poin_pelanggaran >= 75) {
+            $hal_surat = "Surat Panggilan Siswa Ke 3 (SP3)";
+            $apakahSP3 = true;
+        }
+        else if($poin_pelanggaran >= 50) $hal_surat = "Surat Panggilan Siswa Ke 2 (SP2)";
+        else $hal_surat = "Surat Panggilan Siswa Ke 1 (SP1)";
+
+        // var_dump($hal_surat);
 
         // Kirim data ke view
         $data = [
@@ -69,16 +95,22 @@ class Suratpdf extends CI_Controller {
             'tanggal_bimbingan' => $tanggal_bimbingan_format,
             'hari_bimbingan' => $hari_bimbingan,
             'kode_bimbingan' => $kode_bimbingan,
-            'poin_pelanggaran' => $poin_pelanggaran
+            'poin_pelanggaran' => $poin_pelanggaran,
+            'laporan' => $laporan,
+            'status_sp3' => $apakahSP3
         ];
 
-        // Load view dengan data
-        $html = $this->load->view('surat/surat_pemanggilan', $data, true);
+        
 
-        // Load library PDF
+        // Load view dengan data
+        
+        $html = ($apakahDiberhentikan)? $this->load->view('surat/surat_pemberhentian', $data, true) :  $this->load->view('surat/surat_pemanggilan', $data, true);
+
+
+        //Load library PDF
         $this->pdf->loadHtml($html);
         $this->pdf->setPaper('A4', 'portrait');
         $this->pdf->render();
-        $this->pdf->stream("Surat_Pemanggilan_" . $siswa['nama_siswa'] . ".pdf", array("Attachment" => false));
+        $this->pdf->stream("Surat_Pemberhentian_" . $siswa['nama_siswa'] . ".pdf", array("Attachment" => false));
     }
 }

@@ -15,7 +15,8 @@ class M_pelanggaran extends CI_Model{
 	}
 
 	public function getDataPelanggaran(){
-		$q=$this->db->query("SELECT * FROM pelanggaran order by CAST( poin_pelanggaran AS INT) asc");
+		// $q=$this->db->query("SELECT * FROM pelanggaran order by CAST( poin_pelanggaran AS INT) asc");/
+		$q=$this->db->query("SELECT * FROM pelanggaran order by kode_pelanggaran asc");
 		return $q;
 	}	
 

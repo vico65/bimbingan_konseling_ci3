@@ -120,7 +120,7 @@
             <tr>
                 <td>Nomor</td>
                 <td>:</td>
-                <td>...................</td>
+                <td>421.5/422-_______/ SMKN5/Disdik.SS/ 2025</td>
             </tr>
             <tr>
                 <td>Lamp</td>
@@ -130,7 +130,7 @@
             <tr>
                 <td>Hal</td>
                 <td>:</td>
-                <td style="text-decoration: underline;"><strong>Surat Panggilan Siswa Ke 1</strong></td>
+                <td style="text-decoration: underline;"><strong><?= $hal_surat ?></strong></td>
             </tr>
         </table>
     </div>
@@ -149,15 +149,22 @@
             <tr>
                 <td>di</td>
             </tr>
-            <tr >
+            <tr>
                 <td style="padding-left: 20px;">Palembang</td>
             </tr>
         </table>
 
-        <p>Assalamu’alaikum Wr. Wb, dengan ini kami informasikan bahwa Anak Bapak/Ibu/Saudara telah melanggar tata tertib sekolah berupa :  </p>
+        <p>Assalamu’alaikum Wr. Wb, dengan ini kami informasikan bahwa Anak Bapak/Ibu/Saudara telah melanggar tata tertib sekolah berupa : </p>
+        
 
-        <!-- tambahke fungsi buat ngambek apo dio pelanggaran terakhir or pelanggaran galo2 siswa terkait -->
-        <p><strong>Membuang Sampah Sembarangan</strong></p>
+        <?php 
+        $nomor = 1;
+        foreach($laporan as $l) : 
+        ?>
+        <div><strong><?= $nomor; ?>. <?= $l['deskripsi_pelanggaran'] ?></strong></div>
+        
+        <?php $nomor++;
+        endforeach; ?>
 
         <p>Untuk itu kami harapkan Bapak/Ibu/Saudara datang ke sekolah menghadap : </p>
         <table>
@@ -175,11 +182,11 @@
             </tr>
             <tr>
                 <td>d. Wali Kelas Bersangkutan</td>
-                <td>: </td>
+                <td>: -</td>
             </tr>
             <tr>
                 <td>e. Guru BP</td>
-                <td>: -</td>
+                <td>: Rapli Iskanda, S. Pd.</td>
             </tr>
             <tr>
                 <td>f. Guru Mata Pelajaran</td>
@@ -190,7 +197,7 @@
                 <td>: -</td>
             </tr>
             <tr>
-                <td>e. Guru Piket</td>  
+                <td>e. Guru Piket</td>
                 <td>: -</td>
             </tr>
         </table>
@@ -207,7 +214,7 @@
                 <td><strong>Tanggal</strong></td>
                 <td>:</td>
                 <!-- buat bahasa indonesia bulannya -->
-                <td><?= date('d F Y', strtotime($tanggal_bimbingan)) ?></td>
+                <td><?= $tanggal_bimbingan ?></td>
             </tr>
             <tr>
                 <td><strong>Waktu</strong></td>
@@ -219,10 +226,26 @@
         <p>Demikian demi kepentingan anak kita tersebut, diminta saudara hadir tepat pada waktunya. Atas kerjasamanya diucapkan terima kasih.</p>
     </div>
 
-    <div class="footer" style="padding-right: 20px;">
-        <div>Palembang, <?= date('d F Y') ?> <br> Kepala Sekolah</div>
-        <div style="padding: 45px;"></div>
-        <div><strong>Bambang Riadi, S.Pd.M.Pd</strong> <br> Pembina Tk I, IV/b <br> NIP. 196712101991031008</div>
+    <div style="padding-right: 20px; width: 100%; display: table;">
+        <!-- div pertama -->
+        <div class="" style="font-size: 12px; vertical-align: middle; display: table-cell; width: 30%;">
+            <?php if($status_sp3): ?>
+            <p>NB : Apabila tidak memenuhi panggilan ini dianggap mengundurkan diri</p>
+            <?php endif; ?>
+        </div>
+
+        <!-- div kedua -->
+        <div class="" style="text-align: left; width: 60%;
+            display: table-cell;
+            vertical-align: middle;  padding-left: 200px;">
+
+                <div>Palembang, <?= $tanggal_bimbingan ?> <br> Kepala Sekolah</div>
+                <div style="padding: 35px;"></div>
+                <div><strong>Bambang Riadi, S.Pd.M.Pd</strong> <br> Pembina Tk I, IV/b <br> NIP. 196712101991031008</div>
+
+
+        </div>
+
     </div>
 
     <div style="margin-top: 10px; text-align: right;">

@@ -225,6 +225,30 @@ class M_laporan extends CI_Model{
 	
 		return $q;
 	}
+
+	public function getLaporanPelanggaranBySiswa($nis_siswa, $tahun_ajaran_aktif) {
+		$this->db->select('
+			deskripsi_pelanggaran
+		');
+
+		$this->db->from('laporan');
+
+		$this->db->where('nis_siswa', $nis_siswa);
+		$this->db->where('tahun_akademik', $tahun_ajaran_aktif);
+
+		$this->db->order_by('poin_pelanggaran', 'DESC'); // Urutkan dari yang terbesar
+    	// $this->db->limit(1); // Ambil hanya satu data
+
+		$query = $this->db->get();
+
+		if ($query->num_rows() > 0) {
+			return $query->result_array();
+			log_message('info', 'tidak ada data');
+		} else {
+			return null; // Jika tidak ada data
+		}
+		
+	}
 	
 
 	public function getHistoriLaporan($tahun_ajaran = null) {

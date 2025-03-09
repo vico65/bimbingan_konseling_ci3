@@ -83,6 +83,23 @@ class M_siswa extends CI_Model
 		}
 	}
 
+	public function getSiswaIdAndWali($nis_siswa)
+	{
+		$this->db->select('siswa.*, kelas.nama_kelas, wali_siswa.nama_wali_siswa, wali_siswa.alamat_wali_siswa, wali_siswa.pekerjaan_wali_siswa');
+		$this->db->from('siswa');
+		$this->db->join('kelas', 'kelas.id_kelas = siswa.kelas', 'left'); // JOIN dengan tabel kelas
+		$this->db->join('wali_siswa', 'wali_siswa.nis_siswa = siswa.nis_siswa', 'left'); // JOIN dengan tabel kelas
+		$this->db->where('siswa.nis_siswa', $nis_siswa);
+
+		$query = $this->db->get();
+
+		if ($query->num_rows() > 0) {
+			return $query->row_array(); // Mengembalikan data siswa dengan nama kelas
+		} else {
+			return false; // Jika tidak ada siswa ditemukan
+		}
+	}
+
 	public function getSiswaByWali()
 	{
 		// Ambil id_wali dari session
