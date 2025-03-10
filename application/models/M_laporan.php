@@ -61,10 +61,53 @@ class M_laporan extends CI_Model{
 		// Panggil fungsi dari model M_bimbingan
 		$this->load->model('M_bimbingan');
 		$this->m_bimbingan->CekDataBimbingan($nis_siswa, $poin_baru, $id_laporan);
+
+		$this->load->model('M_siswa');
+		$siswa = $this->m_siswa->getSiswaIdAndWali($nis_siswa);
+
+		if($siswa['poin_siswa'] >= 25) {
+			echo json_encode(array('status' => 'success', 'message' => 'Poin berhasil ditambahkan', 'apakahBimbingan' => true, 'linkWaWali' => $this->BuatLinkWhatsapp($siswa['nama_siswa'], $siswa['nama_kelas'], $this->getLaporanPelanggaranBySiswa($nis_siswa, $tahun_aktif), $siswa['poin_siswa'], date('Y-m-d'), $siswa['no_telephone_wali_siswa'], $siswa['nama_wali_siswa'])));
+		} else {
+			echo json_encode(array('status' => 'success', 'message' => 'Poin berhasil ditambahkan', 'apakahBimbingan' => false, 'linkWaWali' => null));
+		}
 	
-		echo json_encode(array('status' => 'success', 'message' => 'Poin berhasil ditambahkan'));
+		
 		exit;
 	}
+
+	public function BuatLinkWhatsapp($nama_siswa, $kelas, $pelanggaran, $poin, $tanggal, $nomor_wali, $nama_wali) {
+        $nomor_wali = str_replace("08", "628", $nomor_wali);
+
+        $pesan = "*Laporan Pelanggaran Siswa*\n\n";
+
+		$pesan .= "Yth. $nama_wali,\n\n";
+		$pesan .= "Kami dari Bimbingan Konseling (BK) SMK Negeri 5 Palembang, ingin menyampaikan bahwa anak Bapak/Ibu, *$nama_siswa*, kelas *$kelas*, telah melakukan pelanggaran tata tertib sekolah dengan rincian:\n\n";
+
+		$nomor = 1;
+
+		foreach ($pelanggaran as $pel) {
+			$pesan .= "- *Pelanggaran ke-$nomor :* \n";
+			$pesan .= "Deskripsi Pelanggaran		   : " . $pel['deskripsi_pelanggaran'] . "\n";
+			$pesan .= "Poin pelanggaran    			   : " . $pel['poin_pelanggaran'] . " poin\n";
+			$pesan .= "Tanggal dan Waktu kejadian      : " .  $pel['create_date'] . "\n";
+			$nomor++;
+		}
+
+		$pesan .= "\nDengan jumlah poin yang didapatkan oleh anak Bapak/Ibu adalah sebesar *" . $poin . "*, termasuk poin-poin pelanggaran lain dengan nominal kecil dan tidak dimasukan pada list di atas.\n";
+		$pesan .= "Karena akumulasi poin pelanggaran sudah melebihi batas yang ditentukan, kami mengundang Bapak/Ibu untuk menghadiri pertemuan di sekolah.\n\n";
+		$pesan .= "Kami juga meminta Bapak/Ibu dapat login pada website Bimbingan Konseling SMKN 5 Palembang agar dapat melihat Surat Resmi Pemanggilan Bapak/Ibu, berikut kami sertakan link website untuk melihat *Surat Pemanggilan Resmi* dari pihak sekolah:\n";
+		$pesan .= "\nhttp://localhost/bimbingan_konseling\n\n";
+		$pesan .= "Bapak/Ibu juga dapat meminta surat secara langsung dari Kami dengan membalas pesan ini atau Bapak/Ibu jika memiliki pertanyaan terkait hal tersebut, dapat membalas melalui pesan pada whatsapp ini\n\n";
+		$pesan .= "Demikian informasi ini kami sampaikan. Terima kasih atas perhatian dan kerja sama Bapak/Ibu.\n\n";
+		$pesan .= "Hormat kami,\nBimbingan Konseling Sekolah.";
+
+		$pesan = urlencode($pesan);
+
+        // Buat link WhatsApp
+        $link_wa = "https://wa.me/$nomor_wali?text=$pesan";
+
+        return $link_wa;
+    }
 	
 	public function insertPoinSiswa($nis, $poin, $id_laporan, $id_pelanggaran_array) {
 		// Ambil data siswa berdasarkan NIS
@@ -227,9 +270,7 @@ class M_laporan extends CI_Model{
 	}
 
 	public function getLaporanPelanggaranBySiswa($nis_siswa, $tahun_ajaran_aktif) {
-		$this->db->select('
-			deskripsi_pelanggaran
-		');
+		$this->db->select('deskripsi_pelanggaran, poin_pelanggaran, create_date');
 
 		$this->db->from('laporan');
 

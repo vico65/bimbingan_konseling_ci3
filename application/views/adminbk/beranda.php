@@ -1,23 +1,3 @@
-<?php
-require_once 'vendor/autoload.php';
-
-use Twilio\Rest\Client;
-
-// Ganti dengan kredensial Twilio kamu
-$sid    = "ACdef3933d3194f7a9c01a69c323935d48";
-$token  = "92b8ad3aaec6f5a743c3b2b564649666";
-$twilio = new Client($sid, $token);
-
-$message = $twilio->messages
-      ->create("whatsapp:+6282239714869", // Nomor tujuan (ganti dengan nomor penerima)
-        array(
-          "from" => "whatsapp:+14155238886", // Nomor Twilio WhatsApp
-          "body" => "Halo, ini pesan otomatis dari Twilio WhatsApp!"
-        )
-      );
-
-echo "Pesan terkirim dengan SID: " . $message->sid;
-?>
 
 <!-- Modal -->
 <div class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
@@ -235,9 +215,15 @@ function GettotalPointDipilih() {
                 try {
                     let result = typeof response === 'string' ? JSON.parse(response) : response;
                     
-                    if (result.status === 'success') {
+                    if (result.status === 'success' && !result.apakahBimbingan) {
                         swal("Informasi", result.message, "success").then(() => location.reload());
-                    } else {
+                    } else if (result.status === 'success' && result.apakahBimbingan) {
+                        swal("Informasi", result.message, "success").then(() => {
+                            window.open(result.linkWaWali, "_blank");
+                            location.reload();
+                        });
+                    } 
+                    else {
                         swal("Informasi", result.message, "error");
                     }
                 } catch (e) {

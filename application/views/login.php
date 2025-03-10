@@ -106,6 +106,12 @@
 				<button id="loginWaliA" type="button" class="btn btn-danger">Wali Siswa A</button>
 				<button id="loginSiswaB" type="button" class="btn btn-danger">Siswa B</button>
 				<button id="loginWaliB" type="button" class="btn btn-danger">Wali Siswa B</button>
+				<button id="loginSiswaC" type="button" class="btn btn-danger">Siswa C</button>
+				<button id="loginWaliC" type="button" class="btn btn-danger">Wali Siswa C</button>
+				<button id="loginSiswaD" type="button" class="btn btn-danger">Siswa D</button>
+				<button id="loginWaliD" type="button" class="btn btn-danger">Wali Siswa D</button>
+				<button id="loginSiswaE" type="button" class="btn btn-danger">Siswa E</button>
+				<button id="loginWaliE" type="button" class="btn btn-danger">Wali Siswa E</button>
 			</div>
 		</div>
 	</div>
@@ -171,6 +177,28 @@
 			{
 				'username' : '333444',
 				'password' : 'wali333444'
+			},
+			{
+				'username' : '111223',
+				'password' : '111223'
+			},
+			{
+				'username' : '111223',
+				'password' : 'wali111223'
+			},{
+				'username' : '111224',
+				'password' : '111224'
+			},
+			{
+				'username' : '111224',
+				'password' : 'wali111224'
+			},{
+				'username' : '111225',
+				'password' : '111225'
+			},
+			{
+				'username' : '111225',
+				'password' : 'wali111225'
 			},
 			
 

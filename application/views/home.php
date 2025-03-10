@@ -119,7 +119,7 @@
                 <p>Histori Laporan </p>
               </a>
             </li>
-            <li class="nav-item <?= ($this->uri->segment(1) == 'daftar_bimbingan' || $this->uri->segment(1) == 'jadwal_bimbingan') ? 'active' : '' ?>">
+            <li class="nav-item <?= ($this->uri->segment(1) == 'daftar_bimbingan' || $this->uri->segment(1) == 'jadwal_bimbingan' ) ? 'active' : '' ?>">
               <a class="nav-link" href="<?= base_url() ?>daftar_bimbingan">
                 <i class="material-icons">info_outline</i>
                 <p>Daftar siswa bimbingan</p>

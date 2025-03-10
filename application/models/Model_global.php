@@ -173,12 +173,12 @@ class Model_global extends CI_Model{
 
 
 	//query untuk menampilkan notifikasi sesuai type akses
-	public function getNotifikasi($type_akses){
+	public function getNotifikasi($type_akses, $id){
 		if ($type_akses=='adminbk') {
 			$whereStr=" laporan.read_status_admin='N' and laporan.status_validasi='B'";
 		} 
 		else if ($type_akses=='murid') {
-			$whereStr=" laporan.read_status_siswa='N'";
+			$whereStr=" laporan.read_status_siswa='N' and laporan.nis_siswa=$id";
 		}
 		else if ($type_akses=='wali_murid') {
 			$whereStr=" laporan.read_status_wali='N'";

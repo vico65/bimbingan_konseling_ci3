@@ -85,7 +85,7 @@ class M_siswa extends CI_Model
 
 	public function getSiswaIdAndWali($nis_siswa)
 	{
-		$this->db->select('siswa.*, kelas.nama_kelas, wali_siswa.nama_wali_siswa, wali_siswa.alamat_wali_siswa, wali_siswa.pekerjaan_wali_siswa');
+		$this->db->select('siswa.*, kelas.nama_kelas, wali_siswa.nama_wali_siswa, wali_siswa.alamat_wali_siswa, wali_siswa.pekerjaan_wali_siswa, wali_siswa.no_telephone_wali_siswa');
 		$this->db->from('siswa');
 		$this->db->join('kelas', 'kelas.id_kelas = siswa.kelas', 'left'); // JOIN dengan tabel kelas
 		$this->db->join('wali_siswa', 'wali_siswa.nis_siswa = siswa.nis_siswa', 'left'); // JOIN dengan tabel kelas

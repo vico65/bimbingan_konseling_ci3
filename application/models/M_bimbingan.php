@@ -219,11 +219,12 @@ class M_bimbingan extends CI_Model
 				INNER JOIN jadwal_bimbingan 
 					ON jadwal_bimbingan.id_bimbingan = bimbingan.id_bimbingan 
 				WHERE 
-					nis_siswa = ? 
+					bimbingan.nis_siswa = ? 
+					AND jadwal_bimbingan.nis_siswa = ?
 					AND bimbingan.status_bimbingan = ? 
 				ORDER BY jadwal_bimbingan.id_bimbingan 
 				LIMIT 1
-			", [$id, $status]);
+			", [$id, $id, $status]);
 		} else if ($type == 'JADWAL') {
 			$q = $this->db->query("
 				SELECT 
@@ -234,8 +235,9 @@ class M_bimbingan extends CI_Model
 				INNER JOIN jadwal_bimbingan 
 					ON jadwal_bimbingan.id_bimbingan = bimbingan.id_bimbingan 
 				WHERE 
-					nis_siswa = ? 
-			", [$id]);
+					bimbingan.nis_siswa = ? 
+					AND jadwal_bimbingan.nis_siswa = ?
+			", [$id, $id]);
 		}
 
 		return $q;

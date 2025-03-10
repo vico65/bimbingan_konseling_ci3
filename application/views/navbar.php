@@ -36,8 +36,9 @@
         <!-- Query untuk membedakan isi navbar sesuai type akses -->
         <?php
         $navbar_hak_akses = $this->session->userdata('level_akses');
+        $id = $this->session->userdata('id');
         if ($navbar_hak_akses == 'adminbk' || $navbar_hak_akses == 'murid' || $navbar_hak_akses == 'wali_murid') {
-          $jumlah_notifikasi = $this->model_global->getNotifikasi($navbar_hak_akses)->num_rows();
+          $jumlah_notifikasi = $this->model_global->getNotifikasi($navbar_hak_akses, $id)->num_rows();
         }
 
         if ($navbar_hak_akses == 'adminbk' || $navbar_hak_akses == 'murid' || $navbar_hak_akses == 'wali_murid') {
@@ -62,7 +63,7 @@
               <?php
               if ($navbar_hak_akses == 'adminbk') {
                 if ($jumlah_notifikasi > 0) {
-                  foreach ($this->model_global->getNotifikasi($navbar_hak_akses)->result_array() as $rowNotif1) {
+                  foreach ($this->model_global->getNotifikasi($navbar_hak_akses, $id)->result_array() as $rowNotif1) {
                     echo '<a class="dropdown-item" href="#"> <i class="fa fa-flag" style="color:red"></i>&nbsp;Laporan pelanggaran siswa dari &nbsp;<b>' . $rowNotif1["nama_guru"] . ' </b>&nbsp;menunggu validasi admin</a>';
                   }
                 } else {
@@ -70,7 +71,7 @@
                 }
               } elseif ($navbar_hak_akses == 'murid') {
                 if ($jumlah_notifikasi > 0) {
-                  foreach ($this->model_global->getNotifikasi($navbar_hak_akses)->result_array() as $rowNotif2) {
+                  foreach ($this->model_global->getNotifikasi($navbar_hak_akses, $id)->result_array() as $rowNotif2) {
                     echo '<a class="dropdown-item" href="#"><b><i class="fa fa-flag"></i> ' . $rowNotif2["nama_guru"] . '</b> &nbsp; Melaporkan anda</a>';
                   }
                 } else {
@@ -78,7 +79,7 @@
                 }
               } elseif ($navbar_hak_akses == 'wali_murid') {
                 if ($jumlah_notifikasi > 0) {
-                  foreach ($this->model_global->getNotifikasi($navbar_hak_akses)->result_array() as $rowNotif3) {
+                  foreach ($this->model_global->getNotifikasi($navbar_hak_akses, $id)->result_array() as $rowNotif3) {
                     echo ' <a class="dropdown-item" href="#">You have 5 new tasks</a>';
                   }
                 } else {

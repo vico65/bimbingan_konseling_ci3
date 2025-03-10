@@ -49,7 +49,7 @@ class LaporanController extends CI_Controller {
         $this->m_laporan->insertPoinSiswa($nis, $poin, $id_laporan, $id_pelanggaran_array);
     }
     
-
+    //beranda admin BK
     public function PemberianPointLaporan() {
         $nis = $this->input->post('nis');
         $poin = $this->input->post('total_point');
@@ -74,6 +74,8 @@ class LaporanController extends CI_Controller {
         //     echo 'gagal'; // Atau menggunakan json_encode(['status' => 'error', 'message' => 'Gagal menyimpan data']);
         // }
     }
+
+    
 
     
 	public function PembatalanLaporan()

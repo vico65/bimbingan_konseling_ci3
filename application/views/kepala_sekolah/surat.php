@@ -64,7 +64,7 @@
                                                 <td><?= htmlspecialchars($row['no_telephone_siswa']) ?></td>
                                                 <td><?= htmlspecialchars($row['poin_siswa']) ?></td>
                                                 <td>               
-                                                    <button type="button" class="btn btn-warning" data-id="<?= $row['id_siswa'] ?>" onclick="setIdAndOpenModal(this)" data-toggle="modal" data-target="#modal_surat">
+                                                    <button type="button" class="btn btn-warning" data-id="<?= $row['nis_siswa'] ?>" onclick="setIdAndOpenModal(this)" data-toggle="modal" data-target="#modal_surat">
                                                         <b>Lihat Surat</b>
                                                     </button>
                                                 </td>
