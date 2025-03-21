@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css"> -->
-    <title>Laporan Pelanggaran</title>
+    <title>Rekap Siswa Bimbingan</title>
     <style>
         body {
             font-family: "Arial", sans-serif;
@@ -119,7 +119,7 @@
                 <div style="font-weight: 500;">Jalan Demang Lebar Daun No. 4811, Kel. Lorok Pakjo, Kec. Ilir Barat 1 <br>
                     Telp. 345820 Palembang 30137, Sumatera Selatan<br></div>
 
-                Laman : <a href="http://www.smkn5palembang.sch.id">www.smkn5palembang.sch.id</a> | Email: smkn5_plg@yahoo.co.id
+                Laman: <a href="http://www.smkn5palembang.sch.id">www.smkn5palembang.sch.id</a> | Email: smkn5_plg@yahoo.co.id
             </div> <br>
         </div>
 
@@ -134,12 +134,12 @@
     <div class="mb-5"></div>
 
     <div class="content">
-        <div style="text-align: center; font-size: 18px; margin-top: 10px;"><strong>Laporan Bimbingan Siswa</strong></div>
+        <div style="text-align: center; font-size: 14px; margin-top: 10px; text-transform: uppercase;"><strong>Rekap Daftar Siswa Bimbingan</strong></div>
 
         <?php if ($tahun_ajaran_terpilih) : ?>
-            <div style="text-align: center; font-size: 15px;"><strong>Tahun Akademik <?= $tahun_ajaran_terpilih ?></strong></div>
+            <div style="text-align: center; font-size: 12px; text-transform: uppercase;"><strong>Tahun Akademik <?= $tahun_ajaran_terpilih ?></strong></div>
         <?php else :  ?>
-            <div style="text-align: center; font-size: 15px;"><strong>Semua Tahun Akademik</strong></div>
+            <div style="text-align: center; font-size: 12px; text-transform: uppercase;"><strong>Semua Tahun Akademik</strong></div>
         <?php endif; ?>
 
 
@@ -187,7 +187,7 @@
 
     </div>
 
-    <div style=" width: 100%; display: table; margin-top: 180px;">
+    <div style=" width: 100%; display: table; margin-top: 180px; font-size: 14px;">
 
         <div class="" style="width: 40%;"></div>
 

@@ -12,7 +12,7 @@
                             <!-- Form untuk filter Tahun Ajaran -->
                             <form class="w-100" method="GET" action="<?= site_url('adminbk/BimbinganController/') ?>">
                                 <label for="tahun_ajaran"><b>Pilih Tahun Akademik:</b></label>
-                                <select name="tahun_ajaran" id="tahun_ajaran" class="form-control <?= $this->session->userdata('level_akses') == 'kepsek'? 'w-75' : '' ?>" onchange="this.form.submit()">
+                                <select name="tahun_ajaran" id="tahun_ajaran" class="form-control <?= $this->session->userdata('level_akses') == 'kepsek'? 'w-100' : '' ?>" onchange="this.form.submit()">
                                     <option value="">-- Semua Tahun Akademik --</option>
                                     <?php foreach ($tahun_ajaran_list as $tahun) : ?>
                                         <option value="<?= $tahun['tahun_akademik'] ?>" <?= ($tahun['tahun_akademik'] == $tahun_ajaran_terpilih) ? 'selected' : '' ?>>
@@ -24,7 +24,7 @@
 
                             <?php if ($this->session->userdata('level_akses') == 'kepsek' && $bimbingan->num_rows() > 0) :  ?>
                                 <button type="button" class="btn btn-warning m-3 ms-auto" onclick="lihatLaporan()">
-                                    <b>Buat Laporan Pdf</b>
+                                    <b>Cetak</b>
                                     <!-- <b><?= $tahun_ajaran_terpilih ?></b> -->
                                     <input type="hidden" name="" id="tahun_ajaran_terpilih" value="<?= $tahun_ajaran_terpilih ?>">
                                 </button>
@@ -127,9 +127,9 @@
         let tahun_ajaran_terpilih = document.getElementById('tahun_ajaran_terpilih');
 
         if(tahun_ajaran_terpilih.value) {
-            window.location.href = "<?= site_url('suratpdf/laporanPelanggaran') ?>?tahun_ajaran_terpilih=" + encodeURIComponent(tahun_ajaran_terpilih.value);
+            window.location.href = "<?= site_url('suratpdf/laporanBimbingan') ?>?tahun_ajaran_terpilih=" + encodeURIComponent(tahun_ajaran_terpilih.value);
         } else {
-            window.location.href = "<?= site_url('suratpdf/laporanPelanggaran') ?>/";
+            window.location.href = "<?= site_url('suratpdf/laporanBimbingan') ?>/";
             
         }
         
