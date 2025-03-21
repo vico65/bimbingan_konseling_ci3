@@ -425,12 +425,18 @@
             processData: false,
             data: datasend,
             success: function(response) {
-                try {
+              try {
                     let result = typeof response === 'string' ? JSON.parse(response) : response;
-
-                    if (result.status === 'success') {
+                    
+                    if (result.status === 'success' && !result.apakahBimbingan) {
                         swal("Informasi", result.message, "success").then(() => location.reload());
-                    } else {
+                    } else if (result.status === 'success' && result.apakahBimbingan) {
+                        swal("Informasi", result.message, "success").then(() => {
+                            window.open(result.linkWaWali, "_blank");
+                            location.reload();
+                        });
+                    } 
+                    else {
                         swal("Informasi", result.message, "error");
                     }
                 } catch (e) {

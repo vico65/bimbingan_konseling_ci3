@@ -4,15 +4,16 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Surat Pemanggilan</title>
+    <!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css"> -->
+    <title>Laporan Pelanggaran</title>
     <style>
         body {
             font-family: "Arial", sans-serif;
             font-size: 12pt;
             margin: 10px;
             text-align: justify;
-            padding-left: 17px;
-            padding-right: 17px;
+            padding-left: 5px;
+            padding-right: 5px;
         }
 
         .header,
@@ -35,20 +36,9 @@
             margin-bottom: 5px;
         }
 
-        .nomor-surat,
         .content,
         .footer {
             margin-top: 5px;
-        }
-
-        table {
-            width: 100%;
-            border-collapse: collapse;
-        }
-
-        td {
-            vertical-align: top;
-            padding: 1px;
         }
 
         .footer {
@@ -82,6 +72,32 @@
             text-align: center;
             vertical-align: middle;
         }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+            font-size: 12px;
+        }
+
+        th,
+        td {
+            border: 1px solid #ddd;
+            padding: 5px;
+            text-align: center;
+        }
+
+        th {
+            background-color: #f4f4f4;
+        }
+
+        tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+
+        tr:hover {
+            background-color: #f1f1f1;
+        }
     </style>
 </head>
 
@@ -90,7 +106,7 @@
 
     <div class="header-container">
         <div class="header-left">
-            <img src="<?= base_url() ?>assets/img/sumsel-logo.png" alt="" width="80" style="">
+            <img src="<?= base_url() ?>assets/img/sumsel-logo.png" alt="" width="80" height="120" style="">
         </div>
 
 
@@ -117,75 +133,61 @@
     <div class="line"></div>
     <div class="mb-5"></div>
 
-    <div class="nomor-surat" style="margin-bottom: 25px;">
-        <table>
-            <tr>
-                <td>Nomor</td>
-                <td>:</td>
-                <td>421.5/422-241/ SMKN5/Disdik.SS/ 2025</td>
-            </tr>
-            <tr>
-                <td>Lamp</td>
-                <td>:</td>
-                <td>-</td>
-            </tr>
-            <tr>
-                <td>Hal</td>
-                <td>:</td>
-                <td style="text-decoration: underline;"><strong><?= $hal_surat ?></strong></td>
-            </tr>
-        </table>
-    </div>
-
     <div class="content">
+        <div style="text-align: center; font-size: 18px; margin-top: 10px;"><strong>Laporan Bimbingan Siswa</strong></div>
+
+        <?php if ($tahun_ajaran_terpilih) : ?>
+            <div style="text-align: center; font-size: 15px;"><strong>Tahun Akademik <?= $tahun_ajaran_terpilih ?></strong></div>
+        <?php else :  ?>
+            <div style="text-align: center; font-size: 15px;"><strong>Semua Tahun Akademik</strong></div>
+        <?php endif; ?>
+
+
+        <?php
+
+        $nomor = 1;
+
+        ?>
+
         <table>
-            <tr>
-                <td>Kepada Yth,</td>
-            </tr>
-            <tr>
-                <td>Bapak/Ibu span<?= $siswa['nama_wali_siswa'] ?>
-            </tr>
-            <tr>
-                <td>Di tempat</td>
-            </tr>
+            <thead>
+                <tr>
+                    <th>No.</th>
+                    <th>Tanggal Bimbingan</th>
+                    <th>NIS</th>
+                    <th>Nama Siswa</th>
+                    <th>Kelas</th>
+                    <th>Status Bimbingan</th>
+                    <th>Jenis Bimbingan</th>
+                    <th>Poin</th>
+                </tr>
+            </thead>
+            <tbody>
+
+                <?php foreach ($bimbingan as $row): ?>
+                    <tr>
+                        <td><?= $nomor++ ?></td>
+                        <td><?= $row['tanggal_bimbingan'] ?></td>
+                        <td><?= $row['nis_siswa'] ?></td>
+                        <td style="text-transform: capitalize;"><?= strtolower($row['nama_siswa']) ?></td>
+                        <td><?= $row['nama_kelas'] ?></td>
+                        <td>
+                            <b style="color: <?= ($row['status_bimbingan'] == 'AKTIF') ? 'green' : 'red' ?>;">
+                                <?= $row['status_bimbingan'] ?>
+                            </b>
+                        </td>
+                        <td><?= $row['kode_bimbingan'] ?></td>
+                        <td><?= $row['poin_pelanggaran'] ?></td>
+                    </tr>
+                    <?php $nomor++; ?>
+                <?php endforeach; ?>
+            </tbody>
         </table>
 
-        <p style="font-style: italic;"><strong>Assalamu’alaikum Wr. Wb.</strong></p>
-        <p style="text-indent: 10px;">Dengan ini kami informasikan bahwa, sehubungan dengan tindak lanjut mengenai peraturan tata tertib siswa bahwa anak Bapak/Ibu: </p>
-
-        <div class="" style="padding-left: 50px;">
-            <table>
-                <tr>
-                    <td>Nama</td>
-                    <td>:</td>
-                    <td><?= $siswa['nama_siswa'] ?></td>
-                </tr>
-                <tr>
-                    <td>NIS</td>
-                    <td>:</td>
-                    <td><?= $siswa['nis_siswa'] ?></td>
-                </tr>
-                <tr>
-                    <td>Kelas</td>
-                    <td>:</td>
-                    <td><?= $siswa['nama_kelas'] ?></td>
-                </tr>
-            </table>
-        </div>
-
-        <p style="text-indent: 10px;">Telah dijatuhkan hukum disiplin siswa tingkat berat, berdasarkan keputusan tata
-            tertib sekolah. Maka dari pada itu siswa yang bersangkutan dihilangkan hak, dan
-            kewajibannya selaku siswa SMK NEGERI 5 Palembang sejak hari <?= $hari_laporan ?> tanggal <?= $tanggal_laporan ?>. </p>
-
-
-
-        <p style="text-indent: 10px;">Demikian surat pemberitahuan ini disampaikan, atas perhatian serta kerjasamanya 
-        diucapkan terimakasih.</p>
-        <p style="font-style: italic;"><strong>Wassalamu’alaikum Wr. Wb.</strong></p>
 
     </div>
 
-    <div style=" width: 100%; display: table; margin-top: 50px;">
+    <div style=" width: 100%; display: table; margin-top: 180px;">
 
         <div class="" style="width: 40%;"></div>
 
@@ -193,7 +195,7 @@
             display: table-cell;
             vertical-align: middle;  padding-left: 120px;">
 
-            <div>Palembang, <?= $tanggal_bimbingan ?> <br> Kepala Sekolah,</div>
+            <div>Palembang, <?= $tanggal_hari_ini ?><br> Kepala Sekolah,</div>
             <div style="padding: 50px;"></div>
             <div><strong>Bambang Riadi, S.Pd.M.Pd</strong> <br> Pembina Tk I, IV/b <br> NIP. 196712101991031008</div>
 

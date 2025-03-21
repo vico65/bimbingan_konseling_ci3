@@ -8,9 +8,11 @@
     <style>
         body {
             font-family: "Arial", sans-serif;
-            font-size: 11pt;
+            font-size: 12pt;
             margin: 10px;
             text-align: justify;
+            padding-left: 17px;
+            padding-right: 17px;
         }
 
         .header,
@@ -88,7 +90,7 @@
 
     <div class="header-container">
         <div class="header-left">
-            <img src="<?= base_url() ?>assets/img/sumsel-logo.png" alt="" width="80" style="">
+            <img src="<?= base_url() ?>assets/img/sumsel-logo.png" alt="" width="80" height="120" style="">
         </div>
 
 
@@ -106,7 +108,7 @@
         </div>
 
         <div class="header-right">
-            <img src="<?= base_url() ?>assets/img/smkn5.png" alt="" width="80" style="">
+            <img src="<?= base_url() ?>assets/img/smkn5.png" alt="" width="100" height="120" style="">
         </div>
 
     </div>
@@ -120,12 +122,12 @@
             <tr>
                 <td>Nomor</td>
                 <td>:</td>
-                <td>421.5/422-_______/ SMKN5/Disdik.SS/ 2025</td>
+                <td>421.5/422-241/ SMKN5/Disdik.SS/ 2025</td>
             </tr>
             <tr>
                 <td>Lamp</td>
                 <td>:</td>
-                <td></td>
+                <td>-</td>
             </tr>
             <tr>
                 <td>Hal</td>
@@ -141,115 +143,81 @@
                 <td>Kepada Yth,</td>
             </tr>
             <tr>
-                <td>Orang Tua/Wali <?= $siswa['nama_siswa'] ?>
+                <td>Bapak/Ibu <?= $siswa['nama_wali_siswa'] ?>
+            </tr>
+            <tr>
+                <td>Orang Tua/Wali dari <?= $siswa['nama_siswa'] ?>
             </tr>
             <tr>
                 <td>Kelas <?= $siswa['nama_kelas'] ?>
             </tr>
             <tr>
-                <td>di</td>
-            </tr>
-            <tr>
-                <td style="padding-left: 20px;">Palembang</td>
+                <td>Di tempat</td>
             </tr>
         </table>
 
-        <p>Assalamu’alaikum Wr. Wb, dengan ini kami informasikan bahwa Anak Bapak/Ibu/Saudara telah melanggar tata tertib sekolah berupa : </p>
-        
+        <p style="font-style: italic;"><strong>Assalamu’alaikum Wr. Wb.</strong></p>
+        <p style="text-indent: 10px;">Dengan ini kami informasikan bahwa Anak Bapak/Ibu/Saudara telah melakukan pelanggaran tata tertib sekolah dengan rincian berupa : </p>
 
-        <?php 
-        $nomor = 1;
-        foreach($laporan as $l) : 
-        ?>
-        <div><strong><?= $nomor; ?>. <?= $l['deskripsi_pelanggaran'] ?></strong></div>
-        
-        <?php $nomor++;
-        endforeach; ?>
-
-        <p>Untuk itu kami harapkan Bapak/Ibu/Saudara datang ke sekolah menghadap : </p>
-        <table>
-            <tr>
-                <td width="50%">a. Kepala Sekolah</td>
-                <td width="50%">: -</td>
-            </tr>
-            <tr>
-                <td>b. Wakil Kepala Sekolah</td>
-                <td>: -</td>
-            </tr>
-            <tr>
-                <td>c. Kaprog</td>
-                <td>: -</td>
-            </tr>
-            <tr>
-                <td>d. Wali Kelas Bersangkutan</td>
-                <td>: -</td>
-            </tr>
-            <tr>
-                <td>e. Guru BP</td>
-                <td>: Rapli Iskanda, S. Pd.</td>
-            </tr>
-            <tr>
-                <td>f. Guru Mata Pelajaran</td>
-                <td>: -</td>
-            </tr>
-            <tr>
-                <td>g. Kaprog BDP</td>
-                <td>: -</td>
-            </tr>
-            <tr>
-                <td>e. Guru Piket</td>
-                <td>: -</td>
-            </tr>
-        </table>
-
-        <p>di SMK Negeri 5 Palembang pada:</p>
-
-        <table style="padding-left: 40px;">
-            <tr>
-                <td width="40%"><strong>Hari</strong></td>
-                <td width="5%">:</td>
-                <td><?= $hari_bimbingan ?></td>
-            </tr>
-            <tr>
-                <td><strong>Tanggal</strong></td>
-                <td>:</td>
-                <!-- buat bahasa indonesia bulannya -->
-                <td><?= $tanggal_bimbingan ?></td>
-            </tr>
-            <tr>
-                <td><strong>Waktu</strong></td>
-                <td>:</td>
-                <td>09.00 WIB</td>
-            </tr>
-        </table>
-
-        <p>Demikian demi kepentingan anak kita tersebut, diminta saudara hadir tepat pada waktunya. Atas kerjasamanya diucapkan terima kasih.</p>
-    </div>
-
-    <div style="padding-right: 20px; width: 100%; display: table;">
-        <!-- div pertama -->
-        <div class="" style="font-size: 12px; vertical-align: middle; display: table-cell; width: 30%;">
-            <?php if($status_sp3): ?>
-            <p>NB : Apabila tidak memenuhi panggilan ini dianggap mengundurkan diri</p>
-            <?php endif; ?>
+        <div class="" style="padding-left: 50px;">
+            <table>
+                <tr>
+                    <td>Hari</td>
+                    <td>:</td>
+                    <td><?= $hari_laporan ?></td>
+                </tr>
+                <tr>
+                    <td>Tanggal dan Waktu</td>
+                    <td>:</td>
+                    <td><?= $tanggal_laporan ?> <?= $waktu_laporan ?></td>
+                </tr>
+                <tr>
+                    <td>Deskripsi Pelanggaran</td>
+                    <td>:</td>
+                    <td><?= $laporan['deskripsi_pelanggaran'] ?></td>
+                </tr>
+            </table>
         </div>
 
-        <!-- div kedua -->
+        <p style="text-indent: 10px;">Untuk itu kami harapkan Bapak/Ibu/Saudara dapat menyempatkan diri untuk datang ke sekolah. Menghadap Guru Bimbingan Konseling SMK NEGERI 5 Palembang pada: </p>
+
+        <div class="" style="padding-left: 50px;">
+            <table>
+                <tr>
+                    <td>Hari</td>
+                    <td>:</td>
+                    <td><?= $hari_bimbingan ?></td>
+                </tr>
+                <tr>
+                    <td>Tanggal dan Waktu</td>
+                    <td>:</td>
+                    <td><?= $tanggal_bimbingan ?> 10.00</td>
+                </tr>
+            </table>
+        </div>
+
+
+
+        <p style="text-indent: 10px;">Demikian surat panggilan ini disampaikan, atas perhatian serta kerjasamanya diucapkan terima kasih.</p>
+        <p style="font-style: italic;"><strong>Wassalamu’alaikum Wr. Wb.</strong></p>
+
+    </div>
+
+    <div style=" width: 100%; display: table; margin-top: 50px;">
+
+        <div class="" style="width: 40%;"></div>
+
         <div class="" style="text-align: left; width: 60%;
             display: table-cell;
-            vertical-align: middle;  padding-left: 200px;">
+            vertical-align: middle;  padding-left: 120px;">
 
-                <div>Palembang, <?= $tanggal_bimbingan ?> <br> Kepala Sekolah</div>
-                <div style="padding: 35px;"></div>
-                <div><strong>Bambang Riadi, S.Pd.M.Pd</strong> <br> Pembina Tk I, IV/b <br> NIP. 196712101991031008</div>
+            <div>Palembang, <?= $tanggal_bimbingan ?> <br> Kepala Sekolah,</div>
+            <div style="padding: 50px;"></div>
+            <div><strong>Bambang Riadi, S.Pd.M.Pd</strong> <br> Pembina Tk I, IV/b <br> NIP. 196712101991031008</div>
 
 
         </div>
 
-    </div>
-
-    <div style="margin-top: 10px; text-align: right;">
-        <p style="font-size: 10px; color: gray;">*Data Meri : F. surat-surat"</p>
     </div>
 
 </body>

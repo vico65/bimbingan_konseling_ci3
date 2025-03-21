@@ -98,7 +98,7 @@
 				</div>
 			</div>
 
-			<div class="fixed-bottom bg-warning border-3 p-3 border-dark z-3 login-cheat">
+			<!-- <div class="fixed-bottom bg-warning border-3 p-3 border-dark z-3 login-cheat">
 				<button id="loginBK" type="button" class="btn btn-success">Pak Rapli(BK)</button>
 				<button id="loginGuru" type="button" class="btn btn-danger">Ibu Weli(Guru)</button>
 				<button id="loginKepsek" type="button" class="btn btn-danger">Ibu Vira(Kepsek)</button>
@@ -112,7 +112,7 @@
 				<button id="loginWaliD" type="button" class="btn btn-danger">Wali Siswa D</button>
 				<button id="loginSiswaE" type="button" class="btn btn-danger">Siswa E</button>
 				<button id="loginWaliE" type="button" class="btn btn-danger">Wali Siswa E</button>
-			</div>
+			</div> -->
 		</div>
 	</div>
 	</div>
@@ -149,69 +149,69 @@
 
 		//cheat
 
-		const dataLogin = [
-			{
-				'username' : '2025100',
-				'password' : '2025100'
-			},
-			{
-				'username' : '2025200',
-				'password' : '2025200'
-			},
-			{
-				'username' : '2025400',
-				'password' : '2025400'
-			},
-			{
-				'username' : '111222',
-				'password' : '111222'
-			},
-			{
-				'username' : '111222',
-				'password' : 'wali111222'
-			},
-			{
-				'username' : '333444',
-				'password' : '333444'
-			},
-			{
-				'username' : '333444',
-				'password' : 'wali333444'
-			},
-			{
-				'username' : '111223',
-				'password' : '111223'
-			},
-			{
-				'username' : '111223',
-				'password' : 'wali111223'
-			},{
-				'username' : '111224',
-				'password' : '111224'
-			},
-			{
-				'username' : '111224',
-				'password' : 'wali111224'
-			},{
-				'username' : '111225',
-				'password' : '111225'
-			},
-			{
-				'username' : '111225',
-				'password' : 'wali111225'
-			},
+		// const dataLogin = [
+		// 	{
+		// 		'username' : '2025100',
+		// 		'password' : '2025100'
+		// 	},
+		// 	{
+		// 		'username' : '2025200',
+		// 		'password' : '2025200'
+		// 	},
+		// 	{
+		// 		'username' : '2025400',
+		// 		'password' : '2025400'
+		// 	},
+		// 	{
+		// 		'username' : '111222',
+		// 		'password' : '111222'
+		// 	},
+		// 	{
+		// 		'username' : '111222',
+		// 		'password' : 'wali111222'
+		// 	},
+		// 	{
+		// 		'username' : '333444',
+		// 		'password' : '333444'
+		// 	},
+		// 	{
+		// 		'username' : '333444',
+		// 		'password' : 'wali333444'
+		// 	},
+		// 	{
+		// 		'username' : '111223',
+		// 		'password' : '111223'
+		// 	},
+		// 	{
+		// 		'username' : '111223',
+		// 		'password' : 'wali111223'
+		// 	},{
+		// 		'username' : '111224',
+		// 		'password' : '111224'
+		// 	},
+		// 	{
+		// 		'username' : '111224',
+		// 		'password' : 'wali111224'
+		// 	},{
+		// 		'username' : '111225',
+		// 		'password' : '111225'
+		// 	},
+		// 	{
+		// 		'username' : '111225',
+		// 		'password' : 'wali111225'
+		// 	},
 			
 
-		]
+		// ]
 	
 		
-		const loginCheat = $('.login-cheat');
-		loginCheat.children().each(function(i, e) {
-			e.addEventListener('click', function() {
-				$('#username').val(dataLogin[i].username) ;
-				$('#password').val(dataLogin[i].password) ;
-			})
-		})
+		// const loginCheat = $('.login-cheat');
+		// loginCheat.children().each(function(i, e) {
+		// 	e.addEventListener('click', function() {
+		// 		$('#username').val(dataLogin[i].username) ;
+		// 		$('#password').val(dataLogin[i].password) ;
+		// 	})
+		// })
 
 		//login ajax
 		function GOlogin() {

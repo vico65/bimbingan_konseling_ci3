@@ -192,7 +192,7 @@
                 <p>Daftar pelanggaran</p>
               </a>
             </li>
-            <li class="nav-item <?= ($this->uri->segment(1) == 'histori_laporan') ? 'active' : '' ?>">
+            <li class="nav-item <?= ($this->uri->segment(1) == 'histori_laporan' || $this->uri->segment(1) == 'adminbk') ? 'active' : '' ?>">
               <a class="nav-link" href="<?= base_url() ?>histori_laporan">
                 <i class="material-icons">report</i>
                 <p>Histori Laporan </p>

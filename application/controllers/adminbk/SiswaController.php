@@ -52,7 +52,7 @@ class SiswaController extends CI_Controller {
 		$this->m_siswa->AksiTambahSiswa($data_siswa, $data_wali);
 
 		// Mengirimkan response JSON
-		echo json_encode(array('status' => 'success', 'message' => 'Data siswa dan wali siswa dengan nis ' . $nis . ' telah ditambahkan!'));
+		echo json_encode(array('status' => 'success', 'message' => 'Data siswa dan wali siswa berhasil ditambahkan!'));
 		
 	}
 
@@ -61,7 +61,7 @@ class SiswaController extends CI_Controller {
 		$nis=$this->input->post('nis_siswa');
 		$this->m_siswa->AksiHapusSiswa($nis);
 
-		echo json_encode(array('status' => 'success', 'message' => 'Data siswa telah dihapus!'));
+		echo json_encode(array('status' => 'success', 'message' => 'Data siswa berhasil dihapus!'));
 	}
 
 	public function GetDatasiswa()

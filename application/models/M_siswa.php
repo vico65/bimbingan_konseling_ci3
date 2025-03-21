@@ -167,6 +167,7 @@ class M_siswa extends CI_Model
 		$this->db->select('siswa.*, kelas.nama_kelas');
 		$this->db->from('siswa');
 		$this->db->join('kelas', 'siswa.kelas = kelas.id_kelas'); // Pastikan id_kelas ada di kedua tabel
+		$this->db->order_by('siswa.nama_siswa', 'ASC');
 		$query = $this->db->get();
 
 		if (!$query) {

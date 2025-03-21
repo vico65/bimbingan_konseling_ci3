@@ -1,194 +1,189 @@
-
-  <!-- Modal -->
-  <div class="modal fade bd-example-modal-lg" id="modalSiswa" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-lg">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="exampleModalLabel"><b>Daftar Siswa</b></h5>
-          <button type="button" id="close_modal" class="close" data-dismiss="modal" aria-label="Close" onclick="resetTabel()">
-            <span aria-hidden="true">&times;</span>
-          </button>
+<!-- Modal -->
+<div class="modal fade bd-example-modal-lg" id="modalSiswa" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel"><b>Daftar Siswa</b></h5>
+        <button type="button" id="close_modal" class="close" data-dismiss="modal" aria-label="Close" onclick="resetTabel()">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="input-group">
+          <input type="text" class="form-control" id="nama_siswa" placeholder="Masukkan nis siswa">
+          <span class="input-group-btn">
+            <button class="btn btn-default" type="button" id="cari_siswa" onclick="CariSiswa()"><i class="fa fa-search"></i> Cari</button>
+          </span>
         </div>
-        <div class="modal-body">
-          <div class="input-group">
-            <input type="text" class="form-control" id="nama_siswa" placeholder="Masukkan nama / nis siswa">
-            <span class="input-group-btn">
-            <button class="btn btn-default" type="button" id="cari_siswa" onclick="CariSiswa()"><i class="fa fa-search"></i> Cari</button>            
-            </span>
-         </div>
-         <div id="hasil_cari"></div>
-        </div>
-        <div class="modal-footer">
-        </div>
+        <div id="hasil_cari"></div>
+      </div>
+      <div class="modal-footer">
       </div>
     </div>
   </div>
- <!--  end modal -->
+</div>
+<!--  end modal -->
 
 
- <!-- menu beranda -->
-  <div class="row position-relative">
+<!-- menu beranda -->
+<div class="row position-relative">
 
-    <div class="col-lg-12 col-md-12">
-      <div class="card">
-        <div class="card-header card-header-tabs card-header-danger">
-          <b><i class="fa fa-warning"></i> LAPORKAN SISWA</b>
-        </div>
-        <div class="card-body">
-          <div class="tab-content">
-            <div class="tab-pane active" id="profile">
-              <button class="btn btn-primary" type="button" id="cari_siswa" data-toggle="modal" data-target="#modalSiswa"> <i class="material-icons">open_in_browser</i> Pilih siswa</button>
-              <table class="table">
-                <tr style="display: none;">
-                  <td colspan="3"><input type="text" id="id_siswa" name="" readonly=""></td>
-                </tr>
-                <tr>
-                  <td style="width: 100px"><b>NIS</b></td>
-                  <td style="width: 10px">:</td>
-                  <td><span id="tabel_nis_siswa">-</span></td>
-                </tr>
-                <tr>
-                  <td><b>Nama siswa</b></td>
-                  <td>:</td>
-                  <td><span id="tabel_nama_siswa">-</span></td>
-                </tr>
-                <tr>
-                  <td><b>Kelas</b></td>
-                  <td>:</td>
-                  <td><span id="tabel_kelas_siswa">-</span></td>
-                </tr>
-              </table>
-              <textarea class="form-control" id="deskripsi_pelanggaran" placeholder="Deskripsikan Pelanggaran Yang Dilakukan Oleh Siswa"></textarea>
-              <button class="btn btn-success" style="float: right;" type="button" id="kirim" onclick="TambahLaporan()">kirim <i class="fa fa-paper-plane"></i></button>
-            </div>
+  <div class="col-lg-12 col-md-12">
+    <div class="card">
+      <div class="card-header card-header-tabs card-header-danger">
+        <b><i class="fa fa-warning"></i> LAPORKAN SISWA</b>
+      </div>
+      <div class="card-body">
+        <div class="tab-content">
+          <div class="tab-pane active" id="profile">
+            <button class="btn btn-primary" type="button" id="cari_siswa" data-toggle="modal" data-target="#modalSiswa"> <i class="material-icons">open_in_browser</i> Pilih siswa</button>
+            <table class="table">
+              <tr style="display: none;">
+                <td colspan="3"><input type="text" id="id_siswa" name="" readonly=""></td>
+              </tr>
+              <tr>
+                <td style="width: 100px"><b>NIS</b></td>
+                <td style="width: 10px">:</td>
+                <td><span id="tabel_nis_siswa">-</span></td>
+              </tr>
+              <tr>
+                <td><b>Nama siswa</b></td>
+                <td>:</td>
+                <td><span id="tabel_nama_siswa">-</span></td>
+              </tr>
+              <tr>
+                <td><b>Kelas</b></td>
+                <td>:</td>
+                <td><span id="tabel_kelas_siswa">-</span></td>
+              </tr>
+            </table>
+            <textarea class="form-control" id="deskripsi_pelanggaran" placeholder="Deskripsikan Pelanggaran Yang Dilakukan Oleh Siswa"></textarea>
+            <button class="btn btn-success" style="float: right;" type="button" id="kirim" onclick="TambahLaporan()">kirim <i class="fa fa-paper-plane"></i></button>
           </div>
         </div>
       </div>
     </div>
-
-    <div class="fixed-bottom bg-warning border-3 p-3 border-dark z-3 login-cheat">
-				<button id="siswaA" type="button" class="btn btn-success">Siswa A</button>
-				<button id="siswaB" type="button" class="btn btn-danger">Siswa B</button>
-				<button id="SP1" type="button" class="btn btn-danger">SP1</button>
-				<button id="SP2" type="button" class="btn btn-danger">SP2</button>
-				<button id="SP3" type="button" class="btn btn-danger">SP3</button>
-			</div>
   </div>
+
+  <!-- <div class="fixed-bottom bg-warning border-3 p-3 border-dark z-3 login-cheat">
+    <button id="siswaA" type="button" class="btn btn-success">Siswa A</button>
+    <button id="siswaB" type="button" class="btn btn-danger">Siswa B</button>
+    <button id="SP1" type="button" class="btn btn-danger">SP1</button>
+    <button id="SP2" type="button" class="btn btn-danger">SP2</button>
+    <button id="SP3" type="button" class="btn btn-danger">SP3</button>
+  </div> -->
+</div>
 <!-- end beranda -->
 
 <script type="text/javascript">
+  // $('#siswaA').click(function() {
+  //   $('#nama_siswa').val('111222')
+  // })
 
-  $('#siswaA').click(function() {
-    $('#nama_siswa').val('111222')
-  })
+  // $('#siswaB').click(function() {
+  //   $('#nama_siswa').val('333444')
+  // })
 
-  $('#siswaB').click(function() {
-    $('#nama_siswa').val('333444')
-  })
+  // $('#SP1').click(function() {
+  //   $('#deskripsi_pelanggaran').val('Merokok di wc')
+  // })
 
-  $('#SP1').click(function() {
-    $('#deskripsi_pelanggaran').val('Merokok di wc')
-  })
+  // $('#SP2').click(function() {
+  //   $('#deskripsi_pelanggaran').val('Berkelahi di area kelas')
+  // })
 
-  $('#SP2').click(function() {
-    $('#deskripsi_pelanggaran').val('Berkelahi di area kelas')
-  })
-
-  $('#SP3').click(function() {
-    $('#deskripsi_pelanggaran').val('Berduaan bersama wanita')
-  })
+  // $('#SP3').click(function() {
+  //   $('#deskripsi_pelanggaran').val('Berduaan bersama wanita')
+  // })
 
 
 
   // ajax untuk pencarian siswa
-  function CariSiswa(){
-   if ($('#nama_siswa').val()=='') {
-      swal("Informasi","Masukkan Nama atau Nis Siswa!","error");
+  function CariSiswa() {
+    if ($('#nama_siswa').val() == '') {
+      swal("Informasi", "Masukkan Nama atau Nis Siswa!", "error");
     } else {
       $("#pageloader").fadeIn();
       setTimeout(function() {
         var datasend = new FormData();
-        datasend.append('nama',$('#nama_siswa').val());
-          $.ajax({
-              url: '<?=base_url()?>Guru/cariSiswa',
-              method: 'POST',
-              contentType: false,
-              processData: false,
-              data: datasend,
-              success: function(data) {
-                console.log(data);
-                $("#pageloader").hide();
-                $("#hasil_cari").html(data);
+        datasend.append('nama', $('#nama_siswa').val());
+        $.ajax({
+          url: '<?= base_url() ?>Guru/cariSiswa',
+          method: 'POST',
+          contentType: false,
+          processData: false,
+          data: datasend,
+          success: function(data) {
+            console.log(data);
+            $("#pageloader").hide();
+            $("#hasil_cari").html(data);
 
-                $("#cari_siswa").click(function(){
-                  $("#hasil_cari").html('');
-                });                                    
-              },
-              error: function(data) {
-                console.log(data);
-                $("#pageloader").hide();               
-                  swal("Informasi","Gagal Terhubung Ke Server" ,"error");
-              }
-          });
-        }, 100);
-      }
+            $("#cari_siswa").click(function() {
+              $("#hasil_cari").html('');
+            });
+          },
+          error: function(data) {
+            console.log(data);
+            $("#pageloader").hide();
+            swal("Informasi", "Gagal Terhubung Ke Server", "error");
+          }
+        });
+      }, 100);
     }
+  }
 
-    // untuk mereset data siswa di popup setelah keluar
-    function resetTabel(){
-      $("#hasil_cari").html('');
-      $('#nama_siswa').val('');
-    }
+  // untuk mereset data siswa di popup setelah keluar
+  function resetTabel() {
+    $("#hasil_cari").html('');
+    $('#nama_siswa').val('');
+  }
 
-    //jquery untuk mengisi tabel data siswa yang melanggar
-    function ParsingDataSiswa(nis,nama,kelas){
-      $("#id_siswa").val(nis);
-      $("#tabel_nis_siswa").html(nis);
-      $("#tabel_nama_siswa").html(nama);
-      $("#tabel_kelas_siswa").html(kelas);
-      $('#modalSiswa').modal('hide');
-    }
+  //jquery untuk mengisi tabel data siswa yang melanggar
+  function ParsingDataSiswa(nis, nama, kelas) {
+    $("#id_siswa").val(nis);
+    $("#tabel_nis_siswa").html(nis);
+    $("#tabel_nama_siswa").html(nama);
+    $("#tabel_kelas_siswa").html(kelas);
+    $('#modalSiswa').modal('hide');
+  }
 
   //ajax untuk menambah laporan pelanggaran siswa
-  function TambahLaporan(){
-    if ($('#id_siswa').val()=='') {
-      swal("Informasi","Pilih salah satu siswa yang ingin dilaporkan!","error");
-    }else if ($('#deskripsi_pelanggaran').val()=='') {
-       swal("Informasi","Tuliskan deskripsi pelanggaran!","error");
-    }else {
+  function TambahLaporan() {
+    if ($('#id_siswa').val() == '') {
+      swal("Informasi", "Pilih salah satu siswa yang ingin dilaporkan!", "error");
+    } else if ($('#deskripsi_pelanggaran').val() == '') {
+      swal("Informasi", "Tuliskan deskripsi pelanggaran!", "error");
+    } else {
       $("#pageloader").fadeIn();
       setTimeout(function() {
         var datasend = new FormData();
-        datasend.append('nis',$('#id_siswa').val());
-        datasend.append('deskripsi_pelanggaran',$('#deskripsi_pelanggaran').val());
-          $.ajax({
-              url: '<?=base_url()?>Guru/TambahLaporanPelanggaran',
-              method: 'POST',
-              contentType: false,
-              processData: false,
-              data: datasend,
-              success: function(data) {
-                console.log(data);
-                $("#pageloader").hide();
-                if (data=='sukses') {
-                  swal("Informasi","Laporan berhasil dikirim" ,"success")
-                  .then((value) => {
-                    location.reload();
-                  }); 
-                } else {
-                  swal("Informasi","Terjadi kesalahan mohon coba beberapa saat lagi" ,"error");
-                }       
-              },
-              error: function(data) {
-                console.log(data);
-                $("#pageloader").hide();               
-                  swal("Informasi","Gagal Terhubung Ke Server" ,"error");
-              }
-          });
-        }, 1000);
-      }
+        datasend.append('nis', $('#id_siswa').val());
+        datasend.append('deskripsi_pelanggaran', $('#deskripsi_pelanggaran').val());
+        $.ajax({
+          url: '<?= base_url() ?>Guru/TambahLaporanPelanggaran',
+          method: 'POST',
+          contentType: false,
+          processData: false,
+          data: datasend,
+          success: function(data) {
+            console.log(data);
+            $("#pageloader").hide();
+            if (data == 'sukses') {
+              swal("Informasi", "Laporan berhasil dikirim", "success")
+                .then((value) => {
+                  location.reload();
+                });
+            } else {
+              swal("Informasi", "Terjadi kesalahan mohon coba beberapa saat lagi", "error");
+            }
+          },
+          error: function(data) {
+            console.log(data);
+            $("#pageloader").hide();
+            swal("Informasi", "Gagal Terhubung Ke Server", "error");
+          }
+        });
+      }, 1000);
     }
-
+  }
 </script>
-
-          

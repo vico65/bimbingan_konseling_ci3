@@ -323,7 +323,7 @@ function tambahKelas(){
           console.log(data);
           $("#pageloader").hide();
           if (data=='sukses') {
-            swal("Informasi","Data berhasil ditambahkan" ,"success")
+            swal("Informasi","Data kelas berhasil ditambahkan" ,"success")
             .then((value) => {
               location.reload();
             }); 
@@ -407,7 +407,7 @@ function AksiUpdateKelas(){
             console.log(data);
             $("#pageloader").hide();
             if (data=='sukses') {
-              swal("Informasi","Data berhasil diubah" ,"success")
+              swal("Informasi","Data kelas berhasil diubah" ,"success")
               .then((value) => {
                 location.reload();
               }); 
@@ -495,7 +495,7 @@ function getdataUpdateSiswa(nis) {
                 $('#tgl_lahir_update').val(data.tgl_lahir);
                 $('#tlp_update').val(data.hp);
             } else {
-                swal("Informasi", "Data tidak ditemukan", "warning");
+                swal("Informasi", "Data kelas tidak ditemukan", "warning");
             }
         },
         error: function(jqXHR, textStatus, errorThrown) {
@@ -527,7 +527,7 @@ function AksiUpdate() {
         success: function(data) {
             $("#pageloader").hide();
             if (data === 'sukses') {
-                swal("Informasi", "Data berhasil diubah", "success")
+                swal("Informasi", "Data kelas berhasil diubah", "success")
                     .then((value) => {
                         location.reload();
                     });

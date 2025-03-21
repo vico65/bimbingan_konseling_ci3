@@ -47,12 +47,7 @@ class Guru extends CI_Controller {
 		// Mendapatkan input nama siswa dari form
 		$data['nama_siswa'] = $this->input->post('nama');
 
-		if (strlen($data['nama_siswa']) == 6 && ctype_digit($data['nama_siswa'])) {
-			$data['query'] = $this->m_siswa->cariSiswaByNis($data['nama_siswa']);
-		} else {
-			// Mengambil hasil pencarian dari model
-			$data['query'] = $this->m_siswa->cariSiswa($data['nama_siswa']);
-		}
+		$data['query'] = $data['query'] = $this->m_siswa->cariSiswaByNis($data['nama_siswa']);
 
 		
 		// Memeriksa apakah data siswa ditemukan
@@ -62,7 +57,7 @@ class Guru extends CI_Controller {
 			$this->load->view('guru/tabel-pencarian-siswa', $data);
 		} else {
 			// Jika tidak ditemukan, tampilkan pesan tidak ada data
-			echo "<center><i class='fa fa-search'></i> Tidak ditemukan data siswa dengan nama '".$data['nama_siswa']."'</center>";
+			echo "<center><i class='fa fa-search'></i> Tidak ditemukan data siswa atau nim '".$data['nama_siswa']."'</center>";
 		}
 	}
 	

@@ -1,6 +1,8 @@
 <?php
 defined('BASEPATH') or exit('No direct script access allowed');
 
+date_default_timezone_set('Asia/Jakarta');
+
 class M_bimbingan extends CI_Model
 {
 
@@ -22,6 +24,27 @@ class M_bimbingan extends CI_Model
         ');
 		$this->db->from('bimbingan');
 		$this->db->join('siswa', 'siswa.nis_siswa = bimbingan.nis_siswa');
+
+		if ($tahun_akademik) {
+			$this->db->where('bimbingan.tahun_akademik', $tahun_akademik);
+		}
+
+		return $this->db->get();
+	}
+
+	public function getDataBimbinganOrderById($tahun_akademik = null)
+	{
+		$this->db->select('
+            bimbingan.*,
+            siswa.nama_siswa,
+            siswa.kelas,	
+            siswa.nis_siswa,
+			kelas.nama_kelas
+        ');
+		$this->db->from('bimbingan');
+		$this->db->join('siswa', 'siswa.nis_siswa = bimbingan.nis_siswa');
+		$this->db->join('kelas', 'kelas.id_kelas = siswa.kelas');
+		$this->db->order_by('bimbingan.id_bimbingan', 'DESC');
 
 		if ($tahun_akademik) {
 			$this->db->where('bimbingan.tahun_akademik', $tahun_akademik);

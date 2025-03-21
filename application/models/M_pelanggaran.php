@@ -14,6 +14,13 @@ class M_pelanggaran extends CI_Model{
 		echo json_encode(array('id'=> $q->id_pelanggaran, 'kode_pelanggaran'=> $q->kode_pelanggaran,'jenis' => $q->jenis_pelanggaran,'poin'=> $q->poin_pelanggaran,'sanksi' => $q->sanksi_pelanggaran));
 	}
 
+	public function GetDataPelanggaranForInsertPoin($id){
+		$this->db->select('*');
+		$this->db->from('pelanggaran');
+		$this->db->where('id_pelanggaran', $id);
+		return $this->db->get()->row_array();
+	}
+
 	public function getDataPelanggaran(){
 		// $q=$this->db->query("SELECT * FROM pelanggaran order by CAST( poin_pelanggaran AS INT) asc");/
 		$q=$this->db->query("SELECT * FROM pelanggaran order by kode_pelanggaran asc");

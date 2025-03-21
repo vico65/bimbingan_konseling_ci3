@@ -13,7 +13,7 @@ class BimbinganController extends CI_Controller {
 		$tahun_akademik = $this->input->get('tahun_ajaran');
 	
 		// Ambil data bimbingan berdasarkan tahun ajaran yang dipilih
-		$data['bimbingan'] = $this->M_bimbingan->getDataBimbingan($tahun_akademik);
+		$data['bimbingan'] = $this->M_bimbingan->getDataBimbinganOrderById($tahun_akademik);
 	
 		// Kirim tahun ajaran yang dipilih ke tampilan
 		$data['tahun_ajaran_terpilih'] = $tahun_akademik;
