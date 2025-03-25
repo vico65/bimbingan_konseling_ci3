@@ -23,7 +23,7 @@
     <div class="col-lg-12 col-md-12">
         <div class="card">
             <div class="card-header card-header-tabs card-header-primary">
-                <b><i class="material-icons">supervised_user_circle</i> DAFTAR SISWA</b>
+                <b class="text-uppercase"><i class="material-icons">supervised_user_circle</i> Daftar Surat Panggilan & Pemberhentian</b>
             </div>
             <div class="card-body">
                 <div class="tab-content">
@@ -39,19 +39,21 @@
                                         <th>Alamat siswa</th>
                                         <th>Jenis kelamin</th>
                                         <th>Tanggal Lahir lahir</th>
-                                        <th>No Telephone</th>
+                                        <th>No. Telephone</th>
                                         <th>Jumlah Poin</th>
-                                        <th style="width: 100px;"><center>Aksi</center></th>
+                                        <th style="width: 100px;">
+                                            <center>Aksi</center>
+                                        </th>
                                     </tr>
                                 </tbody>
                                 <tbody>
                                     <?php
-                                     $nomor = 1;
+                                    $nomor = 1;
                                     // Mengambil data siswa dengan poin lebih dari 25
                                     $getdaftarSiswa = $this->m_siswa->getSiswaDenganPoinDiAtas25();
 
                                     if ($getdaftarSiswa !== false) {
-                                        foreach ($getdaftarSiswa as $row) {                     
+                                        foreach ($getdaftarSiswa as $row) {
                                     ?>
                                             <tr>
                                                 <td><?= $nomor++ ?></td> <!-- Kolom nomor -->
@@ -63,7 +65,7 @@
                                                 <td><?= htmlspecialchars($row['tanggal_lahir']) ?></td>
                                                 <td><?= htmlspecialchars($row['no_telephone_siswa']) ?></td>
                                                 <td><?= htmlspecialchars($row['poin_siswa']) ?></td>
-                                                <td>               
+                                                <td>
                                                     <button type="button" class="btn btn-warning" data-id="<?= $row['nis_siswa'] ?>" onclick="setIdAndOpenModal(this)" data-toggle="modal" data-target="#modal_surat">
                                                         <b>Buat Surat</b>
                                                     </button>
@@ -86,12 +88,12 @@
 </div>
 
 <script type="text/javascript">
-function setIdAndOpenModal(button) {
-    const nisSiswa = button.getAttribute('data-id');
-    document.querySelector('#confirmCreateLetter').setAttribute('onclick', `buatSurat('${nisSiswa}')`);
-}
+    function setIdAndOpenModal(button) {
+        const nisSiswa = button.getAttribute('data-id');
+        document.querySelector('#confirmCreateLetter').setAttribute('onclick', `buatSurat('${nisSiswa}')`);
+    }
 
-function buatSurat(nis_siswa) {
-    window.location.href = "<?= site_url('suratpdf/suratPemanggilan') ?>/" + nis_siswa;
-}
+    function buatSurat(nis_siswa) {
+        window.location.href = "<?= site_url('suratpdf/suratPemanggilan') ?>/" + nis_siswa;
+    }
 </script>

@@ -3,7 +3,6 @@ defined('BASEPATH') or exit('No direct script access allowed');
 
 class M_siswa extends CI_Model
 {
-
 	//query untuk memfilter siswa
 	public function cariDataSiswa($jenis, $parameter)
 	{
@@ -17,7 +16,7 @@ class M_siswa extends CI_Model
 
 		return $q;
 	}
-	
+
 	public function cariSiswa($nama)
 	{
 		// Query dengan JOIN untuk mendapatkan nama_kelas
@@ -109,7 +108,6 @@ class M_siswa extends CI_Model
 		if (!$id_wali) {
 			return false; // Jika id_wali tidak ada di session
 		}
-
 		// Ambil NIS anak dari tabel wali_siswa berdasarkan id_wali
 		$query_wali = $this->db->query("SELECT nis_siswa FROM wali_siswa WHERE id_wali = " . (int)$id_wali);
 
@@ -148,19 +146,11 @@ class M_siswa extends CI_Model
 		$query = $this->db->get();
 
 		if (!$query) {
-			// Jika query gagal, tampilkan pesan error
 			return "kosong"; // Atau bisa mengembalikan array kosong
 		}
 
 		return $query->result_array(); // Mengembalikan hasil sebagai array
 	}
-
-
-
-	// public function getdaftarSiswa(){
-	// 	$query=$this->db->query("SELECT * FROM siswa");
-	// 	return $query;
-	// }
 
 	public function getdaftarSiswa()
 	{
@@ -171,7 +161,6 @@ class M_siswa extends CI_Model
 		$query = $this->db->get();
 
 		if (!$query) {
-			// Jika query gagal, tampilkan pesan error
 			return false; // Atau bisa mengembalikan array kosong
 		}
 

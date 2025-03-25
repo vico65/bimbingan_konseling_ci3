@@ -81,18 +81,8 @@ class M_bimbingan extends CI_Model
 		if (!$tahun_akademik_aktif) {
 			return false;
 		}
-		$tahun_aktif = $tahun_akademik_aktif->tahun_akademik;
 
-		// $cekBimbingan = $this->db->get_where('bimbingan', array(
-		// 	'nis_siswa' => $cekPoin->nis_siswa,
-		// 	'kode_bimbingan' => $jenis,
-		// 	'tahun_akademik' => $tahun_aktif,
-		// 	'status_bimbingan' => 'AKTIF'
-		// ))->row();
-
-		// if (!$cekBimbingan) {
 		$this->InsertBimbinganSiswa($nis_siswa, $poin, $id_laporan, $jenis);
-		// }
 	}
 
 
@@ -199,10 +189,6 @@ class M_bimbingan extends CI_Model
 
 		return $query;
 	}
-
-
-
-
 
 	public function getJadwalBimbingan($id)
 	{

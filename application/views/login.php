@@ -97,22 +97,6 @@
 
 				</div>
 			</div>
-
-			<!-- <div class="fixed-bottom bg-warning border-3 p-3 border-dark z-3 login-cheat">
-				<button id="loginBK" type="button" class="btn btn-success">Pak Rapli(BK)</button>
-				<button id="loginGuru" type="button" class="btn btn-danger">Ibu Weli(Guru)</button>
-				<button id="loginKepsek" type="button" class="btn btn-danger">Ibu Vira(Kepsek)</button>
-				<button id="loginSiswaA" type="button" class="btn btn-danger">Siswa A</button>
-				<button id="loginWaliA" type="button" class="btn btn-danger">Wali Siswa A</button>
-				<button id="loginSiswaB" type="button" class="btn btn-danger">Siswa B</button>
-				<button id="loginWaliB" type="button" class="btn btn-danger">Wali Siswa B</button>
-				<button id="loginSiswaC" type="button" class="btn btn-danger">Siswa C</button>
-				<button id="loginWaliC" type="button" class="btn btn-danger">Wali Siswa C</button>
-				<button id="loginSiswaD" type="button" class="btn btn-danger">Siswa D</button>
-				<button id="loginWaliD" type="button" class="btn btn-danger">Wali Siswa D</button>
-				<button id="loginSiswaE" type="button" class="btn btn-danger">Siswa E</button>
-				<button id="loginWaliE" type="button" class="btn btn-danger">Wali Siswa E</button>
-			</div> -->
 		</div>
 	</div>
 	</div>
@@ -146,72 +130,6 @@
 			$('#password,.atribut').show();
 			$('#pageloader').hide();
 		});
-
-		//cheat
-
-		// const dataLogin = [
-		// 	{
-		// 		'username' : '2025100',
-		// 		'password' : '2025100'
-		// 	},
-		// 	{
-		// 		'username' : '2025200',
-		// 		'password' : '2025200'
-		// 	},
-		// 	{
-		// 		'username' : '2025400',
-		// 		'password' : '2025400'
-		// 	},
-		// 	{
-		// 		'username' : '111222',
-		// 		'password' : '111222'
-		// 	},
-		// 	{
-		// 		'username' : '111222',
-		// 		'password' : 'wali111222'
-		// 	},
-		// 	{
-		// 		'username' : '333444',
-		// 		'password' : '333444'
-		// 	},
-		// 	{
-		// 		'username' : '333444',
-		// 		'password' : 'wali333444'
-		// 	},
-		// 	{
-		// 		'username' : '111223',
-		// 		'password' : '111223'
-		// 	},
-		// 	{
-		// 		'username' : '111223',
-		// 		'password' : 'wali111223'
-		// 	},{
-		// 		'username' : '111224',
-		// 		'password' : '111224'
-		// 	},
-		// 	{
-		// 		'username' : '111224',
-		// 		'password' : 'wali111224'
-		// 	},{
-		// 		'username' : '111225',
-		// 		'password' : '111225'
-		// 	},
-		// 	{
-		// 		'username' : '111225',
-		// 		'password' : 'wali111225'
-		// 	},
-			
-
-		// ]
-	
-		
-		// const loginCheat = $('.login-cheat');
-		// loginCheat.children().each(function(i, e) {
-		// 	e.addEventListener('click', function() {
-		// 		$('#username').val(dataLogin[i].username) ;
-		// 		$('#password').val(dataLogin[i].password) ;
-		// 	})
-		// })
 
 		//login ajax
 		function GOlogin() {
@@ -250,18 +168,6 @@
 				});
 			}
 		}
-
-
-		//parsing tipe login
-		// function ShowForm(){
-		// 	if ($("#type_akses").val()=='') {
-		// 		$('#username,.atribut').hide();
-		// 		$('#password,.atribut').hide();
-		// 	} else {
-		// 		$('#username,.atribut').show();
-		// 		$('#password,.atribut').show();
-		// 	}
-		// }
 	</script>
 
 </body>

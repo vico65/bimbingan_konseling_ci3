@@ -64,40 +64,10 @@
       </div>
     </div>
   </div>
-
-  <!-- <div class="fixed-bottom bg-warning border-3 p-3 border-dark z-3 login-cheat">
-    <button id="siswaA" type="button" class="btn btn-success">Siswa A</button>
-    <button id="siswaB" type="button" class="btn btn-danger">Siswa B</button>
-    <button id="SP1" type="button" class="btn btn-danger">SP1</button>
-    <button id="SP2" type="button" class="btn btn-danger">SP2</button>
-    <button id="SP3" type="button" class="btn btn-danger">SP3</button>
-  </div> -->
 </div>
 <!-- end beranda -->
 
 <script type="text/javascript">
-  // $('#siswaA').click(function() {
-  //   $('#nama_siswa').val('111222')
-  // })
-
-  // $('#siswaB').click(function() {
-  //   $('#nama_siswa').val('333444')
-  // })
-
-  // $('#SP1').click(function() {
-  //   $('#deskripsi_pelanggaran').val('Merokok di wc')
-  // })
-
-  // $('#SP2').click(function() {
-  //   $('#deskripsi_pelanggaran').val('Berkelahi di area kelas')
-  // })
-
-  // $('#SP3').click(function() {
-  //   $('#deskripsi_pelanggaran').val('Berduaan bersama wanita')
-  // })
-
-
-
   // ajax untuk pencarian siswa
   function CariSiswa() {
     if ($('#nama_siswa').val() == '') {

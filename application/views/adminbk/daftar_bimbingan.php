@@ -2,7 +2,7 @@
     <div class="col-lg-12 col-md-12">
         <div class="card">
             <div class="card-header card-header-tabs card-header-primary">
-                <b><i class="fa fa-warning"></i> DAFTAR BIMBINGAN</b>
+                <b><i class="fa fa-warning"></i> DAFTAR SISWA BIMBINGAN</b>
             </div>
             <div class="card-body">
                 <div class="tab-content">
@@ -48,7 +48,7 @@
                                     <th>Kelas</th>
                                     <th>Status Bimbingan</th>
                                     <th>Jenis Bimbingan</th>
-                                    <th>Poin</th>
+                                    <th>Poin Diterima</th>
                                     <?php if ($this->session->userdata('level_akses') == 'adminbk') : ?>
                                         <th>Aksi</th>
                                     <?php endif; ?>

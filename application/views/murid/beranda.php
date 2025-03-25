@@ -7,7 +7,7 @@
            <i class="material-icons">P</i>
          </div>
          <p class="card-category">Total Point Anda</p>
-         <h3 class="card-title"><?= $this->db->query('select poin_siswa from siswa where nis_siswa = '. $this->session->userdata('id'))->row()->poin_siswa ?></h3>
+         <h3 class="card-title"><?= $this->db->query('select poin_siswa from siswa where nis_siswa = ' . $this->session->userdata('id'))->row()->poin_siswa ?></h3>
        </div>
        <div class="card-footer">
          <div class="stats">

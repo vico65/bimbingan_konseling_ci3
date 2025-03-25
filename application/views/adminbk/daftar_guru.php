@@ -28,7 +28,7 @@
               <?php
               foreach ($this->model_global->data_value('JENIS_KELAMIN')->result_array() as $row) {
               ?>
-                <option value="<?= $row['jenis_value'] ?>" ><?= $row['deskripsi'] ?> </option>
+                <option value="<?= $row['jenis_value'] ?>"><?= $row['deskripsi'] ?> </option>
               <?php
               }
               ?>
@@ -46,7 +46,7 @@
             <select class="form-control" id="jabatan_insert">
               <option value="">-- Pilih Jabatan --</option>
               <option value="Guru BK">Guru BK</option>
-              <option value="Guru" selected>Guru</option>
+              <option value="Guru">Guru</option>
               <option value="Wakil Kepala Sekolah">Wakil Kepala Sekolah</option>
               <option value="Kepala Sekolah">Kepala Sekolah</option>
             </select>
@@ -54,7 +54,7 @@
         </div>
         <div class="col-lg-12 col-md-12">
           <div class="form-group bmd-form-group is-filled">
-            <label class="bmd-label-floating">No. Handphone</label>
+            <label class="bmd-label-floating">No. Telephone</label>
             <input type="text" class="form-control" id="nohp_insert">
           </div>
         </div>
@@ -75,7 +75,7 @@
             <select class="form-control" id="level_insert">
               <option value="">-- Pilih Level Akses --</option>
               <option value="adminbk">Guru BK</option>
-              <option value="guru" selected>Guru</option>
+              <option value="guru">Guru</option>
               <option value="kepsek">Wakil Kepala Sekolah</option>
               <option value="Kepsek">Kepala Sekolah</option>
             </select>
@@ -96,7 +96,7 @@
   <div class="modal-dialog modal-lg">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel"><b>Ubah data guru</b></h5>
+        <h5 class="modal-title" id="exampleModalLabel"><b>Ubah Data Guru</b></h5>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
@@ -174,7 +174,6 @@
   </div>
 </div>
 
-<!-- debugging -->
 <div class="row position-relative">
 
   <div class="col-lg-12 col-md-12">
@@ -197,7 +196,7 @@
                   <th>Jenis Kelamin</th>
                   <th>Alamat </th>
                   <th>Jabatan</th>
-                  <th>No Telephone</th>
+                  <th>No. Telephone</th>
                   <?php if ($this->session->userdata('level_akses') == 'adminbk') : ?>
                     <th style="width: 180px">
                       <center>Aksi</center>
@@ -245,46 +244,7 @@
     </div>
   </div>
 
-  <!-- <div class="fixed-bottom bg-warning border-3 p-3 border-dark z-3">
-    <button id="tambahGuruNipSama" type="button" class="btn btn-success">Tambah Guru Nip Sama</button>
-    <button id="tambahGuruNipBeda" type="button" class="btn btn-danger">Tambah Guru Nip Beda</button>
-  </div>
-</div> -->
-
-<!-- <script type="module">
-  import {
-    fakerID_ID
-  } from 'https://esm.sh/@faker-js/faker';
-
-  $('#tambahGuruNipSama').click(async function() {
-    const randomNip = 2025100;
-    const randomNama = fakerID_ID.person.fullName();
-    const randomAlamat = fakerID_ID.location.streetAddress();
-    const randomNomorTelpon = Math.floor(Math.random() * 1000000000000);
-
-    $('#nip_insert').val(randomNip)
-    $('#nama_insert').val(randomNama)
-    $('#alamat_insert').val(randomAlamat)
-    $('#nohp_insert').val(randomNomorTelpon)
-    $('#username_insert').val(randomNip)
-    $('#password_insert').val(randomNip)
-  })
-
-  $('#tambahGuruNipBeda').click(function() {
-    const randomNip = Math.floor(Math.random() * 1000000);
-    const randomNama = fakerID_ID.person.fullName();
-    const randomAlamat = fakerID_ID.location.streetAddress();
-    const randomNomorTelpon = Math.floor(Math.random() * 1000000000000);
-
-    $('#nip_insert').val(randomNip)
-    $('#nama_insert').val(randomNama)
-    $('#alamat_insert').val(randomAlamat)
-    $('#nohp_insert').val(randomNomorTelpon)
-    $('#username_insert').val(randomNip)
-    $('#password_insert').val(randomNip)
-  })
-</script> -->
-
+</div>
 <script type="text/javascript">
   function insertDataGuru() {
 

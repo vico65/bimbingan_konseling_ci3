@@ -3,14 +3,6 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 class LaporanController extends CI_Controller {
 
-    // public function PemberianPointSiswa(){
-	// 	$nis=$this->input->post('nis');
-	// 	$poin=$this->input->post('total_point');
-	// 	$id_laporan=$this->input->post('id_laporan');
-
-	// 	$this->m_laporan->insertPoinSiswa($nis,$poin,$id_laporan);
-	// }
-
     public function histori_laporan() {
         $this->load->model('m_laporan');
         $this->load->model('TahunAjaranModel'); // Model untuk mengambil daftar tahun ajaran
@@ -67,12 +59,6 @@ class LaporanController extends CI_Controller {
     
         // Proses penyimpanan menggunakan array id_pelanggaran dan poin_pelanggaran
         $result = $this->m_laporan->insertPoinLaporan($nis, $poin, $id_laporan, $id_pelanggaran, $poin_pelanggaran);
-    
-        // if ($result) {
-        //     echo 'sukses';
-        // } else {
-        //     echo 'gagal'; // Atau menggunakan json_encode(['status' => 'error', 'message' => 'Gagal menyimpan data']);
-        // }
     }
 
     

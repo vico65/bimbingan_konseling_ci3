@@ -10,9 +10,8 @@
         body {
             font-family: "Arial", sans-serif;
             font-size: 12pt;
-            margin: 10px;
+            margin: 5px;
             text-align: justify;
-            padding-left: 5px;
             padding-right: 5px;
         }
 

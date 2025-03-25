@@ -2,7 +2,7 @@
 <div class="row">
     <?php
     $total_siswa = $this->db->count_all('siswa');
-    $total_kelas = $this->db->query('select * from data_value where type_value="KELAS"')->num_rows();
+    $total_kelas = $this->db->count_all('kelas');
     $total_guru = $this->db->count_all('guru');
     $total_bimbingan = $this->db->count_all('bimbingan');
     ?>

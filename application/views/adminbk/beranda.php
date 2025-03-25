@@ -64,7 +64,7 @@
 <div class="row">
     <?php
     $total_siswa = $this->db->count_all('siswa');
-    $total_kelas = $this->db->query('select id_kelas from kelas')->num_rows();
+    $total_kelas = $this->db->count_all('kelas');
     $total_guru = $this->db->count_all('guru');
     $total_bimbingan = $this->db->count_all('bimbingan');
     ?>

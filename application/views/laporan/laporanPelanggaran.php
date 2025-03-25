@@ -10,9 +10,8 @@
         body {
             font-family: "Arial", sans-serif;
             font-size: 12pt;
-            margin: 10px;
+            margin: 5px;
             text-align: justify;
-            padding-left: 5px;
             padding-right: 5px;
         }
 
@@ -134,12 +133,12 @@
     <div class="mb-5"></div>
 
     <div class="content">
-        <div style="text-align: center; font-size: 14px; margin-top: 10px; text-transform: uppercase;" ><strong>Rekap Histori Laporan Pelanggaran Siswa</strong></div>
+        <div style="text-align: center; font-size: 14px; margin-top: 10px; text-transform: uppercase;"><strong>Rekap Histori Laporan Pelanggaran Siswa</strong></div>
 
-        <?php if($tahun_ajaran_terpilih) : ?>
-        <div style="text-align: center; font-size: 14px; text-transform: uppercase;"><strong>Tahun Akademik <?= $tahun_ajaran_terpilih ?></strong></div>
+        <?php if ($tahun_ajaran_terpilih) : ?>
+            <div style="text-align: center; font-size: 14px; text-transform: uppercase;"><strong>Tahun Akademik <?= $tahun_ajaran_terpilih ?></strong></div>
         <?php else :  ?>
-        <div style="text-align: center; font-size: 12px; text-transform: uppercase;"><strong>Semua Tahun Akademik</strong></div>
+            <div style="text-align: center; font-size: 12px; text-transform: uppercase;"><strong>Semua Tahun Akademik</strong></div>
         <?php endif; ?>
 
 

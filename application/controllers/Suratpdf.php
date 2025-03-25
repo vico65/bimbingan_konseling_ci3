@@ -1,21 +1,25 @@
 <?php
-defined('BASEPATH') OR exit('No direct script access allowed');
+defined('BASEPATH') or exit('No direct script access allowed');
 
-class Suratpdf extends CI_Controller {
+class Suratpdf extends CI_Controller
+{
 
-	public function __construct(){
-	    parent::__construct();
-	    $this->load->library('pdf');
-	    $this->load->model('m_siswa');
-	    $this->load->model('m_bimbingan'); 
-	}
+    public function __construct()
+    {
+        parent::__construct();
+        $this->load->library('pdf');
+        $this->load->model('m_siswa');
+        $this->load->model('m_bimbingan');
+    }
 
-	public function index() {
-		$this->load->view('home');
-	}
+    public function index()
+    {
+        $this->load->view('home');
+    }
 
-	// Fungsi untuk mengonversi hari ke bahasa Indonesia
-    private function getHariIndonesia($tanggal) {
+    // Fungsi untuk mengonversi hari ke bahasa Indonesia
+    private function getHariIndonesia($tanggal)
+    {
         $hariInggris = date('l', strtotime($tanggal));
         $hariIndonesia = [
             'Sunday' => 'Minggu',
@@ -29,16 +33,28 @@ class Suratpdf extends CI_Controller {
         return $hariIndonesia[$hariInggris];
     }
 
-    private function getTanggalIndonesia($tanggal) {
+    private function getTanggalIndonesia($tanggal)
+    {
         $tanggal = explode(" ", $tanggal);
         $bulanIndonesia = [
-            'Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni',
-            'Juli', 'Agustus', 'September', 'Oktober', 'November', 'Desember'
+            'Januari',
+            'Februari',
+            'Maret',
+            'April',
+            'Mei',
+            'Juni',
+            'Juli',
+            'Agustus',
+            'September',
+            'Oktober',
+            'November',
+            'Desember'
         ];
         return $tanggal[0] . ' ' . $bulanIndonesia[(int)$tanggal[1] - 1] . ' ' . $tanggal[2];
     }
 
-    public function suratPemanggilan($nis_siswa) { 
+    public function suratPemanggilan($nis_siswa)
+    {
         $siswa = $this->m_siswa->getSiswaIdAndWali($nis_siswa);
         if (!$siswa) {
             show_error('Data siswa tidak ditemukan.');
@@ -56,7 +72,6 @@ class Suratpdf extends CI_Controller {
 
         // Ambil tanggal bimbingan dari tabel jadwal_bimbingan
         $tanggal_bimbingan = $this->m_bimbingan->getJadwalBimbinganById($bimbingan['id_bimbingan']);
-        // var_dump($tanggal_bimbingan);
 
         // Pastikan tanggal bimbingan tidak null
         if (!$tanggal_bimbingan) {
@@ -77,20 +92,16 @@ class Suratpdf extends CI_Controller {
         $apakahDiberhentikan = false;
         $apakahSP3 = false;
 
-        if($poin_pelanggaran == 100) {
+        if ($poin_pelanggaran == 100) {
             $hal_surat = "Surat Pemberitahuan Siswa";
             $apakahDiberhentikan = true;
-        }
-        else if($poin_pelanggaran >= 75) {
+        } else if ($poin_pelanggaran >= 75) {
             $hal_surat = "Surat Panggilan Siswa Ke-3";
             $apakahSP3 = true;
-        }
-        else if($poin_pelanggaran >= 50) $hal_surat = "Surat Panggilan Siswa Ke-2";
+        } else if ($poin_pelanggaran >= 50) $hal_surat = "Surat Panggilan Siswa Ke-2";
         else $hal_surat = "Surat Panggilan Siswa Ke-1";
 
         $hari_laporan = $this->getHariIndonesia($laporan['create_date']);
-        // var_dump($hari_laporan);
-
         // Kirim data ke view
         $data = [
             'siswa' => $siswa,
@@ -106,12 +117,8 @@ class Suratpdf extends CI_Controller {
             'status_sp3' => $apakahSP3
         ];
 
-        
-
         // Load view dengan data
-        $html = ($apakahDiberhentikan)? $this->load->view('surat/surat_pemberhentian', $data, true) :  $this->load->view('surat/surat_pemanggilan', $data, true);
-
-        // var_dump($waktu_laporan);
+        $html = ($apakahDiberhentikan) ? $this->load->view('surat/surat_pemberhentian', $data, true) :  $this->load->view('surat/surat_pemanggilan', $data, true);
 
         //Load library PDF
         $this->pdf->loadHtml($html);
@@ -120,28 +127,15 @@ class Suratpdf extends CI_Controller {
         $this->pdf->stream("Surat_Pemberhentian_" . $siswa['nama_siswa'] . ".pdf", array("Attachment" => false));
     }
 
-    public function laporanPelanggaran() { 
-        // $siswa = $this->m_siswa->getSiswaIdAndWali($nis_siswa);
-        // if (!$siswa) {
-        //     show_error('Data siswa tidak ditemukan.');
-        //     return;
-        // }
+    public function laporanPelanggaran()
+    {
         $tahun_ajaran_terpilih = $this->input->get('tahun_ajaran_terpilih');
-        
-        if($tahun_ajaran_terpilih) {
+
+        if ($tahun_ajaran_terpilih) {
             $laporan = $this->m_laporan->getHistoriLaporan($tahun_ajaran_terpilih);
-        } else {    
+        } else {
             $laporan = $this->m_laporan->getHistoriLaporan();
         }
-
-        // var_dump($laporan->result_array());
-
-
-        // $tahun_ajaran_aktif = $this->db->get_where('tahun_akademik', array('status_akademik' => 'aktif'))->row_array();
-        // $tanggal_konfirmasi_pelanggaran = $this->getTanggalIndonesia(date('d m Y', strtotime($tanggal_bimbingan['tanggal_bimbingan'])));
-        // $tanggal_laporan_format = $this->getTanggalIndonesia(date('d m Y', strtotime($laporan['create_date'])));
-        // $waktu_laporan = date("H:i", strtotime($laporan['create_date']));
-        // $hari_laporan = $this->getHariIndonesia($laporan['create_date']);
 
         $tanggal_hari_ini = $this->getTanggalIndonesia(date('d m Y'));
 
@@ -155,8 +149,6 @@ class Suratpdf extends CI_Controller {
         // Load view dengan data
         $html = $this->load->view('laporan/laporanPelanggaran', $data, true);
 
-        // var_dump($html);
-
         //Load library PDF
         $this->pdf->loadHtml($html);
         $this->pdf->setPaper('A4', 'portrait');
@@ -164,28 +156,15 @@ class Suratpdf extends CI_Controller {
         $this->pdf->stream("laporan_pelanggaran.pdf", array("Attachment" => false));
     }
 
-    public function laporanBimbingan() { 
-        // $siswa = $this->m_siswa->getSiswaIdAndWali($nis_siswa);
-        // if (!$siswa) {
-        //     show_error('Data siswa tidak ditemukan.');
-        //     return;
-        // }
+    public function laporanBimbingan()
+    {
         $tahun_ajaran_terpilih = $this->input->get('tahun_ajaran_terpilih');
-        
-        if($tahun_ajaran_terpilih) {
+
+        if ($tahun_ajaran_terpilih) {
             $bimbingan = $this->m_bimbingan->getDataBimbinganOrderById($tahun_ajaran_terpilih);
-        } else {    
+        } else {
             $bimbingan = $this->m_bimbingan->getDataBimbinganOrderById();
         }
-
-        // var_dump($laporan->result_array());
-
-
-        // $tahun_ajaran_aktif = $this->db->get_where('tahun_akademik', array('status_akademik' => 'aktif'))->row_array();
-        // $tanggal_konfirmasi_pelanggaran = $this->getTanggalIndonesia(date('d m Y', strtotime($tanggal_bimbingan['tanggal_bimbingan'])));
-        // $tanggal_laporan_format = $this->getTanggalIndonesia(date('d m Y', strtotime($laporan['create_date'])));
-        // $waktu_laporan = date("H:i", strtotime($laporan['create_date']));
-        // $hari_laporan = $this->getHariIndonesia($laporan['create_date']);
 
         $tanggal_hari_ini = $this->getTanggalIndonesia(date('d m Y'));
 
@@ -198,8 +177,6 @@ class Suratpdf extends CI_Controller {
 
         // Load view dengan data
         $html = $this->load->view('laporan/laporanBimbingan', $data, true);
-
-        // var_dump($bimbingan->result_array());
 
         //Load library PDF
         $this->pdf->loadHtml($html);
